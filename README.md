@@ -25,6 +25,7 @@ ssginc 미니프로젝트2
 - 관리자 기능
 1. 회원 관리
 2. 댓글 삭제
+![image](https://github.com/jang643/Listaurant/assets/53540017/50be8c89-c89c-4083-9fe7-a1179be2bf8e)
 
 ---
 ### 화면 설계
