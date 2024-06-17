@@ -25,3 +25,7 @@ ssginc 미니프로젝트2
 - 관리자 기능
 1. 회원 관리
 2. 댓글 삭제
+
+---
+### 화면 설계
+[화면설계](https://www.figma.com/design/4cTw0L2CaSl54goaPZvHE3/Untitled?node-id=0-1&t=FImaj8QB3C2yLU4c-1)
