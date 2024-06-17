@@ -24,4 +24,4 @@ ssginc 미니프로젝트2
    
 - 관리자 기능
 1. 회원 관리
-2. 댓글 삭제![image](https://github.com/jang643/Listaurant/assets/53540017/7936454b-753d-4a88-a7bc-6f9bdfd3eca9)
+2. 댓글 삭제
