@@ -28,7 +28,7 @@ dependencies {
 
     //web jar
     implementation group: 'org.webjars', name: 'jquery', version: '3.6.0'
-    implementation group: 'org.webjars', name: 'bootstrap', version: '5.3.3'
+//    implementation group: 'org.webjars', name: 'bootstrap', version: '5.3.3'
     //jsp
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
     implementation 'jakarta.servlet:jakarta.servlet-api'

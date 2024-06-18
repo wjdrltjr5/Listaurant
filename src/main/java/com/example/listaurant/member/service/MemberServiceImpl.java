@@ -5,7 +5,6 @@ import com.example.listaurant.member.controller.request.SignUpRequest;
 import com.example.listaurant.member.repository.MemberEntity;
 import com.example.listaurant.member.service.port.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean isDuplicationEmail(String email) {
-        boolean result = memberRepository.findByEmail(email).isPresent();
-        return result;
+        return memberRepository.findByEmail(email).isPresent();
     }
 }

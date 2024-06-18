@@ -73,7 +73,7 @@
 </head>
 <body>
 <nav class="navbar">
-    <a class="navbar-brand" href="#">muk</a>
+    <a class="navbar-brand" href="#">Listaurant</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
