@@ -671,9 +671,7 @@ progress {
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-0.5 * var(--bs-gutter-x));
-  margin-left: calc(-0.5 * var(--bs-gutter-x));
+  margin: calc(-1 * var(--bs-gutter-y)) calc(-0.5 * var(--bs-gutter-x));
 }
 .row > * {
   flex-shrink: 0;
@@ -10823,4 +10821,8 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+
+  .txt_list_btn{
+  }
+
 }

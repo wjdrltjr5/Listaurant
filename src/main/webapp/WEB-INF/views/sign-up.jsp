@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
     <!doctype html>
 <html lang="en" data-bs-theme="auto">
@@ -13,7 +14,6 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
     <title>Signin Template · Bootstrap v5.3</title>
-
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
 
 
@@ -100,7 +100,20 @@
             display: block !important;
         }
     </style>
-
+    <script>
+        function validateForm() {
+            const password = document.getElementById("Password").value;
+            const confirmPassword = document.getElementById("check-floatingPassword").value;
+            const errorElement = document.getElementById("passwordCheckError");
+            console.log(password, confirmPassword, errorElement)
+            if (password !== confirmPassword) {
+                errorElement.textContent = "패스워트가 일치하지 않습니다.";
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
 
     <!-- Custom styles for this template -->
     <link href="css/login.css" rel="stylesheet">
@@ -159,27 +172,41 @@
 
 
 <main class="form-signin w-100 m-auto">
-    <form action="/sign-up" method="post">
-        <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <div class="form-floating">
-            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+
+    <form:form onsubmit="return validateForm()" action="/sign-up" method="post" modelAttribute="signUpRequest">
+        <img class="mb-4" src="assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <div class="form-floating mb-3">
+            <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
             <label for="floatingInput">Email address</label>
+            <form:errors path="email" cssStyle=" color : red"/>
         </div>
-        <div class="form-floating">
-            <input type="password" name="passwd" class="form-control" id="Password" placeholder="Password">
+        <spring:hasBindErrors name="signUpRequest">
+            <c:forEach var="error" items="${errors.globalErrors}">
+                <div class="error" style="color : red">${error.defaultMessage}</div>
+            </c:forEach>
+        </spring:hasBindErrors>
+        <div class="form-floating mb-3">
+            <form:password path="passwd" class="form-control" id="Password" placeholder="Password"/>
             <label for="Password">Password</label>
+            <form:errors path="passwd" cssStyle=" color : red"/>
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="check-floatingPassword" placeholder="Password">
+
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="check-floatingPassword" placeholder="Password"/>
             <label for="check-floatingPassword">Password-Check</label>
+            <div id="passwordCheckError" style="color: red;"></div>
         </div>
-        <div class="form-floating">
-            <input type="tel" name="pno" class="form-control" id="Phone-Number" placeholder="Phone-Number">
+
+        <div class="form-floating mb-3">
+            <form:input type="tel" path="pno" class="form-control" id="Phone-Number" placeholder="Phone-Number"/>
             <label for="Phone-Number">Phone-Number</label>
+            <form:errors path="pno" cssStyle="color: red"/>
         </div>
+
         <button class="btn btn-primary w-100 py-2" type="submit">Sign up</button>
         <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
-    </form>
+    </form:form>
+
 </main>
 <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
 

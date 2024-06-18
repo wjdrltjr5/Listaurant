@@ -8,11 +8,11 @@ CREATE TABLE member (
 
 CREATE TABLE txt (
   txt_id int PRIMARY KEY,
-  lat FLOAT,
-  lng FLOAT,
+  place_name varchar(255),
   written_date DATETIME,
   recommend INT,
   scope INT,
   member_id INT,
+  text varchar(8000),
   FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
