@@ -248,12 +248,27 @@ function displayPagination(pagination) {
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 function displayInfowindow(marker, title) {
+    // marker의 위치를 가져옵니다.
+    let position = marker.getPosition();
+    let lat = position.getLat();
+    let lng = position.getLng();
 
-    let content = '<div style="padding:5px;z-index:1;" onclick="location.href=`/#`">' + title + '</div>';
+    // title과 marker의 위치를 URL 파라미터로 포함한 URL을 생성합니다.
+    let url = `/board?title=${encodeURIComponent(title)}&lat=${lat}&lng=${lng}`;
 
+    // 인포윈도우에 들어갈 HTML 콘텐츠를 생성합니다.
+    let content = `
+        <form action="/board" method="post">
+            <div style="padding:5px;z-index:1;" onclick="location.href='${url}'">
+                ${title}
+            </div>
+        </form>`;
+
+    // 인포윈도우에 콘텐츠를 설정하고, 지도 위에 마커와 함께 표시합니다.
     infowindow.setContent(content);
     infowindow.open(map, marker);
 }
+
 
 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {
