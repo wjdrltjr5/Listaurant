@@ -249,7 +249,7 @@ function displayPagination(pagination) {
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 function displayInfowindow(marker, title) {
 
-    let content = '<div style="padding:5px;z-index:1;" onclick="location.href=`/#`">' + title + '</div>';
+    let content = '<div style="padding:5px;z-index:1;" onclick="location.href=`/board/`">' + title + '</div>';
 
     infowindow.setContent(content);
     infowindow.open(map, marker);
