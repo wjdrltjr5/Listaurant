@@ -48,4 +48,8 @@ public class MemberDetails implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+    public Long getId(){
+        return member.getMemberId();
+    }
 }

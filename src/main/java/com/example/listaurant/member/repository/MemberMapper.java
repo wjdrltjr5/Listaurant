@@ -11,4 +11,9 @@ public interface MemberMapper {
 
     Optional<MemberEntity> findByEmail(String email);
 
+    Optional<MemberEntity> findById(Long id);
+
+    void update(MemberEntity memberEntity);
+
+    void delete(Long id);
 }

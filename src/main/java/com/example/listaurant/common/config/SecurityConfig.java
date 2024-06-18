@@ -27,7 +27,6 @@ public class SecurityConfig {
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.INCLUDE).permitAll()
                         .anyRequest().authenticated()
-
                         )
                 .formLogin(formlogin -> formlogin
                         .loginPage("/login")
