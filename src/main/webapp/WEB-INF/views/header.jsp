@@ -59,7 +59,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" >
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">메뉴</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -76,7 +76,7 @@
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">내 정보</a>
+                    <a class="nav-link" href="/mypage">내 정보</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">로그아웃</a>

@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
@@ -30,5 +32,4 @@ class MemberRepositoryImplTest {
         // then
         assertThat(result.getPno()).isEqualTo("123123");
     }
-
 }

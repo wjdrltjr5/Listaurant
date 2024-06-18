@@ -21,4 +21,19 @@ public class MemberRepositoryImpl implements MemberRepository {
     public Optional<MemberEntity> findByEmail(String email) {
         return memberMapper.findByEmail(email);
     }
+
+    @Override
+    public Optional<MemberEntity> findById(Long id) {
+        return memberMapper.findById(id);
+    }
+
+    @Override
+    public void update(MemberEntity memberEntity) {
+        memberMapper.update(memberEntity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        memberMapper.delete(id);
+    }
 }

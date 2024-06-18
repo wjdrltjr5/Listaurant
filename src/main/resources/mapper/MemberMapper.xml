@@ -12,6 +12,18 @@
         select * from member
         where email = #{email}
     </select>
+    <select id="findById" parameterType="long" resultType="MemberEntity">
+        select * from member
+        where member_id = #{memberId}
+    </select>
+    <update id="update" parameterType="MemberEntity">
+        update member set pno = #{pno}
+        where member_id = #{memberId}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        delete from member where member_id = #{memberId}
+    </delete>
 </mapper>
 
 
