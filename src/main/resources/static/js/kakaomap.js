@@ -76,7 +76,7 @@ function displayMarker(locPosition, message) {
     });
 
     // 인포윈도우를 마커위에 표시합니다
-    infowindow.open(map, marker);
+    //infowindow.open(map, marker);
 
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);
@@ -113,7 +113,7 @@ function placesSearchCB(data, status, pagination) {
 
     }
 }
-
+var selectedmarker = null;
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
     let listEl = document.getElementById('placesList'),
@@ -138,9 +138,17 @@ function displayPlaces(places) {
                 displayInfowindow(marker, title);
             });
 
-            kakao.maps.event.addListener(marker, 'mouseout', function() {
-                infowindow.close();
+            //클릭했을 때 게시판 페이지로 이동
+            kakao.maps.event.addListener(marker, 'onclick', function() {
+                if (selectedmarker == null && selectedmarker !== marker) {
+                    selectedmarker = marker;
+                }
+                displayInfowindow(marker, title);
             });
+
+            /*kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });*/
 
             itemEl.onclick = function () {
                 map.setCenter(placePosition);
@@ -240,7 +248,8 @@ function displayPagination(pagination) {
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 function displayInfowindow(marker, title) {
-    let content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+    let content = '<div style="padding:5px;z-index:1;" onclick="location.href=`/#`">' + title + '</div>';
 
     infowindow.setContent(content);
     infowindow.open(map, marker);
