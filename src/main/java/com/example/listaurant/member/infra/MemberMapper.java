@@ -1,4 +1,4 @@
-package com.example.listaurant.member.repository;
+package com.example.listaurant.member.infra;
 
 import org.apache.ibatis.annotations.Mapper;
 

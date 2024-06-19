@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.listaurant.member.repository.MemberMapper">
+<mapper namespace="com.example.listaurant.member.infra.MemberMapper">
     <insert id="save" parameterType="MemberEntity" useGeneratedKeys="true">
         insert into member (email, passwd, pno, role)
         values (#{email}, #{passwd}, #{pno}, #{role} )

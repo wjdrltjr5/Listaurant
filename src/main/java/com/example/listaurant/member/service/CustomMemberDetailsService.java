@@ -1,6 +1,6 @@
 package com.example.listaurant.member.service;
 
-import com.example.listaurant.member.repository.MemberEntity;
+import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.port.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

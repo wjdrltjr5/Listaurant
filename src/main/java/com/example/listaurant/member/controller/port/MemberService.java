@@ -1,6 +1,6 @@
 package com.example.listaurant.member.controller.port;
 
-import com.example.listaurant.member.repository.MemberEntity;
+import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.dto.MemberDto;
 
 import java.util.Optional;
@@ -18,4 +18,6 @@ public interface MemberService {
     void update(MemberDto memberDto);
 
     void delete(Long id);
+
+    void sendTempPassword(MemberDto dto);
 }

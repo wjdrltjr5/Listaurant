@@ -5,6 +5,7 @@ import com.example.listaurant.member.controller.request.SignUpRequest;
 import com.example.listaurant.member.service.dto.MemberDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -40,5 +42,17 @@ public class MemberController {
         }
         memberService.save(MemberDto.from(signUpRequest));
         return "login";
+    }
+
+    @GetMapping("/temp-password")
+    public String tempPasswordPage() {
+        return "temp-password";
+    }
+
+    @PostMapping("/temp-password")
+    public String sendTempPassword(@RequestParam("email")String email){
+        log.info("email = {}",email);
+        memberService.sendTempPassword(MemberDto.builder().email(email).build());
+        return "redirect:/login";
     }
 }

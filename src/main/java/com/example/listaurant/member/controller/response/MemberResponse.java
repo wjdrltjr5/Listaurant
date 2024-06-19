@@ -1,6 +1,6 @@
 package com.example.listaurant.member.controller.response;
 
-import com.example.listaurant.member.repository.MemberEntity;
+import com.example.listaurant.member.infra.MemberEntity;
 import lombok.*;
 
 @NoArgsConstructor

@@ -4,7 +4,7 @@ import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.member.controller.request.PwdUpdateRequest;
 import com.example.listaurant.member.controller.request.UpdateRequest;
 import com.example.listaurant.member.controller.response.MemberResponse;
-import com.example.listaurant.member.repository.MemberEntity;
+import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.MemberDetails;
 import com.example.listaurant.member.service.dto.MemberDto;
 import jakarta.servlet.http.HttpSession;

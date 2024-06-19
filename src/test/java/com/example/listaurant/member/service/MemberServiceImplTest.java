@@ -1,26 +1,27 @@
 package com.example.listaurant.member.service;
 
 import com.example.listaurant.member.controller.port.MemberService;
-import com.example.listaurant.member.repository.MemberEntity;
-import com.example.listaurant.member.repository.MemberRepositoryImpl;
+import com.example.listaurant.member.infra.MailSenderImpl;
+import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.dto.MemberDto;
 import com.example.listaurant.member.service.port.MemberRepository;
+import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
 class MemberServiceImplTest {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private MailSenderImpl mailSenderImpl;
 
     @Autowired
     private MemberService memberService;
