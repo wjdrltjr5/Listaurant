@@ -32,7 +32,7 @@ public class MemberController {
 
     @PostMapping("/sign-up")
     public String signUp(@Valid @ModelAttribute SignUpRequest signUpRequest, BindingResult br) {
-
+        log.info("signUpRequest = {}",signUpRequest);
         if (memberService.isDuplicationEmail(signUpRequest.getEmail())) {
             br.reject("globalError", "이미 존재하는 사용자입니다.");
             return "sign-up";

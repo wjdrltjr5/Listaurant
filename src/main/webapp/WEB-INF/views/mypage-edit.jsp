@@ -32,13 +32,17 @@
                 <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                     <form:form action="/mypage/update" method="post" modelAttribute="updateRequest">
                         <div class="mb-3">
+                            <label for="nickname" class="form-label">Nickname</label>
+                            <input type="text" name="nickname" class="form-control" id="nickname" value="${member.nickname}">
+                            <form:errors path="nickname" cssStyle=" color: red"/>
+                        </div>
+                        <div class="mb-3">
                             <label for="pno" class="form-label">Phone-Number</label>
                             <input type="tel" name="pno" class="form-control" id="pno" value="${member.pno}">
                             <form:errors path="pno" cssStyle=" color: red"/>
                         </div>
                         <button type="submit" class="btn btn-secondary">수정 완료</button>
                     </form:form>
-
                 </div>
             </div>
         </div>

@@ -10,10 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Setter
 public class MemberDto {
 
     private Long memberId;
     private String email;
+    private String nickname;
     private String passwd;
     private String pno;
     private String role;
@@ -21,6 +23,7 @@ public class MemberDto {
     public static MemberDto from(UpdateRequest request){
         return MemberDto.builder()
                 .memberId(request.getMemberId())
+                .nickname(request.getNickname())
                 .pno(request.getPno())
                 .build();
     }
@@ -28,6 +31,7 @@ public class MemberDto {
     public static MemberDto from(SignUpRequest request){
         return MemberDto.builder()
                 .email(request.getEmail())
+                .nickname(request.getNickname())
                 .passwd(request.getPasswd())
                 .pno(request.getPno())
                 .build();

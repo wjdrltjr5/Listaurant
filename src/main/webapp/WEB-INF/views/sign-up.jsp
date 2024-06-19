@@ -153,6 +153,13 @@
                 <div class="error" style="color : red">${error.defaultMessage}</div>
             </c:forEach>
         </spring:hasBindErrors>
+
+        <div class="form-floating mb-3">
+            <form:input path="nickname" class="form-control" id="nickname" placeholder="nickname"/>
+            <label for="nickname">Nickname</label>
+            <form:errors path="nickname" cssStyle=" color : red"/>
+        </div>
+
         <div class="form-floating mb-3">
             <form:password path="passwd" class="form-control" id="Password" placeholder="Password"/>
             <label for="Password">Password</label>
