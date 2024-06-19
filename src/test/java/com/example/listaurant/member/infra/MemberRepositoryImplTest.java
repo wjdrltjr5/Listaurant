@@ -1,4 +1,4 @@
-package com.example.listaurant.member.repository;
+package com.example.listaurant.member.infra;
 
 import com.example.listaurant.member.service.port.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest

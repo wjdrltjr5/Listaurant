@@ -1,8 +1,7 @@
 package com.example.listaurant.member.service.port;
 
-import com.example.listaurant.member.repository.MemberEntity;
+import com.example.listaurant.member.infra.MemberEntity;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public interface MemberRepository {
