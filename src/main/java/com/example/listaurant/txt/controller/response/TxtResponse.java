@@ -1,6 +1,6 @@
 package com.example.listaurant.txt.controller.response;
 
-import com.example.listaurant.txt.repository.TxtEntity;
+import com.example.listaurant.txt.infra.TxtEntity;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,6 +17,8 @@ public class TxtResponse {
     private int recommend;
     private int scope;
     private long memberId;
+    private double lat;
+    private double lng;
     private String text;
 
     public static TxtResponse from(TxtEntity txtEntity) {
@@ -28,6 +30,8 @@ public class TxtResponse {
                 .scope(txtEntity.getScope())
                 .memberId(txtEntity.getMemberId())
                 .text(txtEntity.getText())
+                .lat(txtEntity.getLat())
+                .lng(txtEntity.getLng())
                 .build();
     }
 }

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Small Business - Start Bootstrap Template</title>
+    <title>Listaurant 페이지</title>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <style>
@@ -61,7 +61,7 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">인기 댓글</h2><hr>
-                    <p class="card-text"> kk</p>
+                    <p class="card-text" id="most-popular">${pop.text}</p>
                 </div>
             </div>
         </div>
@@ -69,14 +69,17 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">최신 댓글</h2><hr>
-                    <p class="card-text">ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+                    <p class="card-text"  id="most-recent">${recent.text}</p>
                 </div>
             </div>
         </div>
         <div class="card text-white bg-secondary my-5 py-4 text-center" style="margin-bottom: 100px">
-            <form id="commentForm" action="/board?title=${title}&lat=${lat}&lng=${lng}" method="post">
+            <form id="commentForm" action="/board/comment" method="post" >
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="Place-Comment" placeholder="Place-Comments"/>
+                    <input type="hidden" name="placeName" value="${title}"/>
+                    <input type="hidden" name="lat" value="${lat}"/>
+                    <input type="hidden" name="lng" value="${lng}"/>
+                    <input type="text" class="form-control" id="Place-Comment" name="text" placeholder="Place-Comments"/>
                     <label for="Place-Comment">후기를 남겨주세요.</label>
                 </div>
                 <button class="btn btn-primary w-100 py-2" type="submit">댓글달기</button>

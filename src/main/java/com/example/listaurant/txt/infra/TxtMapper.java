@@ -1,8 +1,7 @@
-package com.example.listaurant.txt.repository;
+package com.example.listaurant.txt.infra;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -11,10 +10,11 @@ public interface TxtMapper {
 
     TxtEntity findMostRecentTxt();
     TxtEntity findMostPopularTxt();
-    List<TxtEntity> findByRecent();
-    List<TxtEntity> findByPopular();
+//    List<TxtEntity> findByRecent();
+//    List<TxtEntity> findByPopular();
+//
+//    void updateTxt(TxtEntity txtEntity);
+//
+//    void deleteTxt(Long id);
 
-    void updateTxt(TxtEntity txtEntity);
-
-    void deleteTxt(Long id);
 }

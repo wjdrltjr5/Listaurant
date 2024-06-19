@@ -1,18 +1,17 @@
 package com.example.listaurant.txt.controller.port;
 
-import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
-import com.example.listaurant.txt.controller.request.CommentRequest;
-import com.example.listaurant.txt.domain.Txt;
-import com.example.listaurant.txt.repository.TxtEntity;
+import com.example.listaurant.txt.infra.TxtEntity;
+import com.example.listaurant.txt.service.dto.TxtDto;
 
 import java.util.List;
 
 public interface TxtService {
-    void saveTxt(CommentRequest commentRequest);
-    void updateTxt(UpdateTxtRequest updateTxtRequest);
-    TxtEntity findMostRecent();
-    TxtEntity findMostPopular();
-    List<TxtEntity> findByRecent();
-    List<TxtEntity> findByPopular();
-    void deleteTxt(Long id);
+    void saveTxt(TxtDto txtDto);
+//    void updateTxt(TxtDto txtDto);
+//
+    TxtEntity findMostRecentTxt();
+    TxtEntity findMostPopularTxt();
+//    List<TxtEntity> findByRecent();
+//    List<TxtEntity> findByPopular();
+//    void deleteTxt(Long id);
 }

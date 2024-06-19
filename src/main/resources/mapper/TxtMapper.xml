@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.listaurant.txt.infra.TxtMapper">
+    <insert id="saveTxt" parameterType="TxtEntity" useGeneratedKeys="true">
+        insert into txt ( place_name, written_date, recommend, scope, member_id, text, lat, lng )
+        values ( #{placeName}, #{writtenDate}, #{recommend}, #{scope}, #{memberId}, #{text}, #{lat}, #{lng} )
+    </insert>
+
+    <select id="findMostPopularTxt" parameterType="string" resultType="TxtEntity">
+        select * from txt order by recommend desc limit
+    </select>
+
+    <select id="findMostRecentTxt" resultType="TxtEntity">
+        select * from txt order by written_date desc limit
+    </select>
+</mapper>
+
+

@@ -1,14 +1,11 @@
 package com.example.listaurant.txt.service;
 
-import com.example.listaurant.member.repository.MemberEntity;
 import com.example.listaurant.txt.controller.port.TxtService;
-import com.example.listaurant.txt.controller.request.CommentRequest;
-import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
-import com.example.listaurant.txt.repository.TxtEntity;
+import com.example.listaurant.txt.infra.TxtEntity;
+import com.example.listaurant.txt.service.dto.TxtDto;
 import com.example.listaurant.txt.service.port.TxtRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,44 +14,53 @@ import java.util.List;
 public class TxtServiceImpl implements TxtService {
     private final TxtRepository txtRepository;
 
-    @Transactional
     @Override
-    public void saveTxt(CommentRequest commentRequest) {
+    public void saveTxt(TxtDto txtDto) {
         TxtEntity txt = TxtEntity.builder()
-                .txtId(CommentRequest.getTxtId())
-                .pno(CommentRequest.getPno())
-                .passwd(CommentRequest.encode(signUpRequest.getPasswd()))
+                .txtId(txtDto.getTxtId())
+                .placeName(txtDto.getPlaceName())
+                .writtenDate(txtDto.getWrittenDate())
+                .recommend(txtDto.getRecommend())
+                .scope(txtDto.getRecommend())
+                .text(txtDto.getText())
+                .memberId(txtDto.getMemberId())
+                .lat(txtDto.getLat())
+                .lng(txtDto.getLng())
                 .build();
         txtRepository.saveTxt(txt);
     }
 
+//    @Override
+//    public void updateTxt(TxtDto txtDto) {
+//        txtRepository.updateTxt(TxtEntity.builder().memberId(txtDto.getTxtId())
+//                .writtenDate(txtDto.getWrittenDate())
+//                .scope(txtDto.getScope())
+//                .text(txtDto.getText())
+//                .build());
+//    }
+//
     @Override
-    public void updateTxt(UpdateTxtRequest updateTxtRequest) {
-
+    public TxtEntity findMostRecentTxt() {
+        return txtRepository.findMostRecentTxt();
     }
 
     @Override
-    public TxtEntity findMostRecent() {
-        return null;
+    public TxtEntity findMostPopularTxt() {
+        return txtRepository.findMostPopularTxt();
     }
+//
+//    @Override
+//    public List<TxtEntity> findByRecent() {
+//        return List.of();
+//    }
+//
+//    @Override
+//    public List<TxtEntity> findByPopular() {
+//        return List.of();
+//    }
+//
+//    @Override
+//    public void deleteTxt(Long id) {
 
-    @Override
-    public TxtEntity findMostPopular() {
-        return null;
-    }
-
-    @Override
-    public List<TxtEntity> findByRecent() {
-        return List.of();
-    }
-
-    @Override
-    public List<TxtEntity> findByPopular() {
-        return List.of();
-    }
-
-    @Override
-    public void deleteTxt(Long id) {
-
-    }
+//    }
 }

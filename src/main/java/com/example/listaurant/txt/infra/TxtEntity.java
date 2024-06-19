@@ -1,20 +1,23 @@
-package com.example.listaurant.txt.domain;
+package com.example.listaurant.txt.infra;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Txt {
+@Setter
+public class TxtEntity {
+
     public Long txtId;
     public String placeName;
     public LocalDate writtenDate;
     public int recommend;
-    public float scope;
+    public int scope;
     public String text;
+    private double lat;
+    private double lng;
+    public Long memberId;
 }

@@ -1,7 +1,7 @@
 package com.example.listaurant.txt.service.port;
 
 
-import com.example.listaurant.txt.repository.TxtEntity;
+import com.example.listaurant.txt.infra.TxtEntity;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
