@@ -107,7 +107,7 @@
             const errorElement = document.getElementById("passwordCheckError");
             console.log(password, confirmPassword, errorElement)
             if (password !== confirmPassword) {
-                errorElement.textContent = "패스워트가 일치하지 않습니다.";
+                errorElement.textContent = "비밀번호가 일치하지 않습니다.";
                 return false;
             } else {
                 return true;

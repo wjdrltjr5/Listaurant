@@ -17,7 +17,13 @@
         where member_id = #{memberId}
     </select>
     <update id="update" parameterType="MemberEntity">
-        update member set pno = #{pno}
+        update member
+        <set>
+            <if test="email != null">email = #{email},</if>
+            <if test="passwd != null">passwd = #{passwd},</if>
+            <if test="pno != null">pno = #{pno},</if>
+            <if test="role != null">role = #{role},</if>
+        </set>
         where member_id = #{memberId}
     </update>
 

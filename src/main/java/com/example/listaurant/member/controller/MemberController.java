@@ -2,22 +2,15 @@ package com.example.listaurant.member.controller;
 
 import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.member.controller.request.SignUpRequest;
-import com.example.listaurant.member.controller.request.UpdateRequest;
-import com.example.listaurant.member.controller.response.MemberResponse;
-import com.example.listaurant.member.repository.MemberEntity;
-import com.example.listaurant.member.service.MemberDetails;
+import com.example.listaurant.member.service.dto.MemberDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -45,42 +38,7 @@ public class MemberController {
         if (br.hasErrors()) {
             return "sign-up";
         }
-        memberService.save(signUpRequest);
+        memberService.save(MemberDto.from(signUpRequest));
         return "login";
-    }
-
-    @GetMapping({"/mypage","/mypage/"})
-    public String mypage(@AuthenticationPrincipal MemberDetails memberDetails, Model model) {
-        log.info("memberDetatils = {}", memberDetails);
-        MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
-        MemberResponse response = MemberResponse.from(memberEntity);
-        log.info("memberEntity = {}", memberDetails.getUsername());
-        log.info("response = {}", response.toString());
-        model.addAttribute("member", response);
-        return "mypage";
-    }
-
-    @GetMapping("/mypage/{memberId}")
-    public String updateForm(@PathVariable("memberId") Long memberId, Model model) {
-        MemberEntity memberEntity = memberService.findById(memberId).orElseThrow(() -> new UsernameNotFoundException("회원 정보가 없습니다."));
-        MemberResponse response = MemberResponse.from(memberEntity);
-        model.addAttribute("member", response);
-        return "mypage-edit";
-    }
-
-    @PostMapping("/mypage/update")
-    public String update(@AuthenticationPrincipal MemberDetails memberDetails, @Valid @ModelAttribute UpdateRequest updateRequest, BindingResult br) {
-        if (br.hasErrors()) {
-            return "mypage-edit";
-        }
-        updateRequest.setMemberId(memberDetails.getId());
-        memberService.update(updateRequest);
-        return "redirect:/mypage";
-    }
-
-    @PostMapping("/mypage/delete")
-    public String delete(@AuthenticationPrincipal MemberDetails memberDetails){
-        memberService.delete(memberDetails.getId());
-        return "redirect:/";
     }
 }

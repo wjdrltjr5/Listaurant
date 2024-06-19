@@ -3,12 +3,15 @@ package com.example.listaurant.member.service;
 import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.member.repository.MemberEntity;
 import com.example.listaurant.member.repository.MemberRepositoryImpl;
+import com.example.listaurant.member.service.dto.MemberDto;
 import com.example.listaurant.member.service.port.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,5 +39,24 @@ class MemberServiceImplTest {
         // when
         // then
         assertThat(memberService.isDuplicationEmail("test@test.com")).isTrue();
+    }
+
+    @Test
+    @DisplayName("입력한 비밀번호로 변경합니다.")
+    void updatePassword() {
+        // given
+        MemberDto member = MemberDto.builder().email("test123")
+                .pno("123123")
+                .passwd("123123").build();
+        memberService.save(member);
+        MemberEntity result = memberService.findByEmail("test123").get();
+        // when
+        memberService.update(MemberDto.builder()
+                .memberId(result.getMemberId())
+                .passwd("0000")
+                .build());
+        result = memberService.findByEmail("test123").get();
+        // then
+        assertThat(result.getPasswd()).isEqualTo("0000");
     }
 }

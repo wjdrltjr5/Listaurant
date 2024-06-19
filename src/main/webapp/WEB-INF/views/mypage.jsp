@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
-    <link href="bootstrap-5.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -33,15 +32,18 @@
                             <label for="pno" class="form-label">Phone-Number</label>
                             <input type="tel" class="form-control" id="pno"  readonly placeholder="${member.pno}">
                         </div>
-                    <button type="button" class="btn btn-secondary"><a style="color: white; text-decoration-line: none" class="btn-primary" href="/mypage/${member.memberId}">EDIT</a></button>
-                    <button type="button" class="btn btn-danger mt-3" onclick="confirmDeletion()">회원 탈퇴</button>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <button type="button" class="btn btn-secondary"><a style="color: white; text-decoration-line: none" class="btn-primary" href="/mypage/${member.memberId}">EDIT</a></button>
+                            <button type="button" class="btn btn-primary" ><a style="color: white; text-decoration-line: none" class="btn-primary" href="/mypage/password-update">비밀번호 변경</a></button>
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick="confirmDeletion()">회원 탈퇴</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script src="bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function confirmDeletion() {
         if (confirm("회원탈퇴 하시겠습니까?")) {

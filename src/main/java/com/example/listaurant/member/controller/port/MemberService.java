@@ -1,14 +1,13 @@
 package com.example.listaurant.member.controller.port;
 
-import com.example.listaurant.member.controller.request.SignUpRequest;
-import com.example.listaurant.member.controller.request.UpdateRequest;
 import com.example.listaurant.member.repository.MemberEntity;
+import com.example.listaurant.member.service.dto.MemberDto;
 
 import java.util.Optional;
 
 public interface MemberService {
 
-    void save(SignUpRequest signUpRequest);
+    void save(MemberDto memberDto);
 
     boolean isDuplicationEmail(String email);
 
@@ -16,7 +15,7 @@ public interface MemberService {
 
     Optional<MemberEntity> findById(Long id);
 
-    void update(UpdateRequest updateRequest);
+    void update(MemberDto memberDto);
 
     void delete(Long id);
 }
