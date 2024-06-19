@@ -254,6 +254,7 @@ function displayInfowindow(marker, title) {
     let lng = position.getLng();
 
     // title과 marker의 위치를 URL 파라미터로 포함한 URL을 생성합니다.
+
     let url = `/board?title=${encodeURIComponent(title)}&lat=${lat}&lng=${lng}`;
 
     // 인포윈도우에 들어갈 HTML 콘텐츠를 생성합니다.

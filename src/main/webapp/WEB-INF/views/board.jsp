@@ -1,3 +1,6 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,7 +12,6 @@
     <meta name="author" content="" />
     <title>Small Business - Start Bootstrap Template</title>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <style>
         #container {overflow:hidden;height:300px;position:relative;}
@@ -47,7 +49,7 @@
     </div>
     <!-- Content Row-->
     <div class="row gx-4 gx-lg-5">
-        <div class="col-md-4 mb-5">
+        <div class="col-md-4 mb-2">
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">평균 별점</h2><hr>
@@ -55,15 +57,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-5">
+        <div class="col-md-4 mb-2">
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">인기 댓글</h2><hr>
-                    <p class="card-text"></p>
+                    <p class="card-text"> kk</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-5">
+        <div class="col-md-4 mb-2">
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">최신 댓글</h2><hr>
@@ -71,16 +73,19 @@
                 </div>
             </div>
         </div>
-
         <div class="card text-white bg-secondary my-5 py-4 text-center" style="margin-bottom: 100px">
-            <div>
-                <input type="text" id="commentInput" name="txt" class="form-control" style="height: 40px;">
-            </div>
-            <button class="btn btn-primary w-100 py-2" id="submitComment" type="button">댓글 달기</button>
+            <form id="commentForm" action="/board?title=${title}&lat=${lat}&lng=${lng}" method="post">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="Place-Comment" placeholder="Place-Comments"/>
+                    <label for="Place-Comment">후기를 남겨주세요.</label>
+                </div>
+                <button class="btn btn-primary w-100 py-2" type="submit">댓글달기</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
         </div>
-
-
     </div>
+
+
 </div>
 <!-- Footer-->
 <!-- Core theme JS-->

@@ -1,0 +1,33 @@
+package com.example.listaurant.txt.controller.response;
+
+import com.example.listaurant.txt.repository.TxtEntity;
+import lombok.*;
+
+import java.time.LocalDate;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@Getter
+public class TxtResponse {
+    private Long txtId;
+    private String placeName;
+    private LocalDate writtenDate;
+    private int recommend;
+    private int scope;
+    private long memberId;
+    private String text;
+
+    public static TxtResponse from(TxtEntity txtEntity) {
+        return TxtResponse.builder()
+                .txtId(txtEntity.getTxtId())
+                .placeName(txtEntity.getPlaceName())
+                .writtenDate(txtEntity.getWrittenDate())
+                .recommend(txtEntity.getRecommend())
+                .scope(txtEntity.getScope())
+                .memberId(txtEntity.getMemberId())
+                .text(txtEntity.getText())
+                .build();
+    }
+}
