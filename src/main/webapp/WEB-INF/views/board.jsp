@@ -1,9 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c"
-           uri="http://java.sun.com/jstl/core_rt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,6 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Listaurant 페이지</title>
-    <!-- Core theme CSS (includes Bootstrap)-->:
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <style>
         #container {overflow:hidden;height:300px;position:relative;}
@@ -33,11 +31,11 @@
     <div class="row gx-4 gx-lg-5 align-items-center my-5">
         <div id="container" class="view_map">
             <div id="mapWrapper" style="width:100%;height:300px;position:relative;">
-                <div id="map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
+                <div id="map" style="width:100%;height:100%"></div>
                 <input type="button" id="btnRoadview" onclick="toggleMap(false)" title="로드뷰 보기" value="로드뷰">
             </div>
             <div id="rvWrapper" style="width:100%;height:300px;position:absolute;top:0;left:0;">
-                <div id="roadview" style="height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+                <div id="roadview" style="height:100%"></div>
                 <input type="button" id="btnMap" onclick="toggleMap(true)" title="지도 보기" value="지도">
             </div>
         </div>
@@ -118,7 +116,6 @@
             </form>
         </div>
 
-
         <!-- 댓글 리스트 추가 부분 -->
         <div class="card my-5">
             <div class="card-header">
@@ -129,20 +126,33 @@
                     <div class="comment">
                         <p>${comment.text}</p>
                         <small>${comment.nickname} - ${comment.writtenDate} - ${comment.scope}</small>
+                        <script>
+                            console.log(${memberId});
+                        </script>
+                        <c:if test="${comment.memberId eq memberId}">
+                            <form action="/board/delete" method="post">
+                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
+                                <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                            </form>
+                            <form action="/board/edit" method="get">
+                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
+                                <button type="submit" class="btn btn-secondary btn-sm">수정</button>
+                            </form>
+                        </c:if>
                         <hr>
                     </div>
                 </c:forEach>
             </div>
-        </div>
 
+
+        </div>
         <!-- 댓글 리스트 추가 끝 -->
     </div>
-
-
 </div>
 <!-- Footer-->
 <!-- Core theme JS-->
 <script src="/js/board.js"></script>
+
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 

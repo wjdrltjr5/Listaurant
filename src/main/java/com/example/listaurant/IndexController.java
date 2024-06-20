@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,19 +36,26 @@ public class IndexController {
 
     @GetMapping
     public String board(@RequestParam("title") String title, @RequestParam("lat") float lat,
-                        @RequestParam("lng") float lng, Model model){
+                        @RequestParam("lng") float lng, Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
         TxtEntity txtPopularEntity = txtService.findMostPopularTxt(title, changeNum(lat), changeNum(lng));
         TxtEntity txtRecentEntity = txtService.findMostRecentTxt(title, changeNum(lat), changeNum(lng));
         List<TxtEntity> listRecentResponse = txtService.findAllRecentTxt(title, changeNum(lat), changeNum(lng));
 
+
+
         TxtResponse popResponse = TxtResponse.from(txtPopularEntity);
         TxtResponse recentResponse = TxtResponse.from(txtRecentEntity);
         double avgScope = txtService.getAvgScope(title, changeNum(lat), changeNum(lng));
-        log.info("avgScope: {}" , avgScope);
+        log.info("avgScope: {}", avgScope);
 
-        model.addAttribute("title",title);
-        model.addAttribute("lat",lat);
-        model.addAttribute("lng",lng);
+        // 모델에 필요한 데이터 추가
+        if (memberDetails != null){
+            MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
+            model.addAttribute("memberId", memberEntity.getMemberId());
+        }
+        model.addAttribute("title", title);
+        model.addAttribute("lat", lat);
+        model.addAttribute("lng", lng);
         model.addAttribute("pop", popResponse);
         model.addAttribute("recent", recentResponse);
         model.addAttribute("comments", listRecentResponse);
@@ -88,6 +96,7 @@ public class IndexController {
         // 리다이렉트 URL 생성 및 반환
         return "redirect:/board?title={title}&lat={lat}&lng={lng}";
     }
+
 
     public double changeNum(double num){
         BigDecimal bd = new BigDecimal(num).setScale(5, RoundingMode.HALF_UP);
