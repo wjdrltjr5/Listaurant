@@ -40,13 +40,18 @@ public class TxtServiceImpl implements TxtService {
 //    }
 //
     @Override
-    public TxtEntity findMostRecentTxt() {
-        return txtRepository.findMostRecentTxt();
+    public TxtEntity findMostRecentTxt(String title,double lat, double lng) {
+        return txtRepository.findMostRecentTxt(title, lat, lng);
     }
 
     @Override
-    public TxtEntity findMostPopularTxt() {
-        return txtRepository.findMostPopularTxt();
+    public TxtEntity findMostPopularTxt(String title, double lat, double lng) {
+        return txtRepository.findMostPopularTxt(title, lat, lng);
+    }
+
+    @Override
+    public List<TxtEntity> findAllRecentTxt(String title, double lat, double lng) {
+        return txtRepository.findAllRecentTxt(title, lat, lng);
     }
 //
 //    @Override

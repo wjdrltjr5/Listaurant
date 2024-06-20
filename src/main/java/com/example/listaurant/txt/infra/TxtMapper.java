@@ -8,8 +8,9 @@ import java.util.List;
 public interface TxtMapper {
     void saveTxt(TxtEntity txtEntity);
 
-    TxtEntity findMostRecentTxt();
-    TxtEntity findMostPopularTxt();
+    TxtEntity findMostRecentTxt(TxtEntity txtEntity);
+    TxtEntity findMostPopularTxt(TxtEntity txtEntity);
+    List<TxtEntity> findAllRecentTxt(TxtEntity txtEntity);
 //    List<TxtEntity> findByRecent();
 //    List<TxtEntity> findByPopular();
 //

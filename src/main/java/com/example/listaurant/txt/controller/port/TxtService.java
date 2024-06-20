@@ -9,8 +9,9 @@ public interface TxtService {
     void saveTxt(TxtDto txtDto);
 //    void updateTxt(TxtDto txtDto);
 //
-    TxtEntity findMostRecentTxt();
-    TxtEntity findMostPopularTxt();
+    TxtEntity findMostRecentTxt(String title, double lat, double lng);
+    TxtEntity findMostPopularTxt(String title, double lat, double lng);
+    List<TxtEntity> findAllRecentTxt(String title, double lat, double lng);
 //    List<TxtEntity> findByRecent();
 //    List<TxtEntity> findByPopular();
 //    void deleteTxt(Long id);

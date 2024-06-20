@@ -2,12 +2,15 @@ package com.example.listaurant.txt.infra;
 
 import com.example.listaurant.txt.service.port.TxtRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
+@Slf4j
 public class TxtRepositoryImpl implements TxtRepository {
 
     private final TxtMapper txtMapper;
@@ -16,12 +19,35 @@ public class TxtRepositoryImpl implements TxtRepository {
     public void saveTxt(TxtEntity txtEntity) { txtMapper.saveTxt(txtEntity); }
 
     @Override
-    public TxtEntity findMostRecentTxt() {
-        return txtMapper.findMostRecentTxt();
+    public TxtEntity findMostRecentTxt(String title, double lat, double lng) {
+        TxtEntity txtEntity = TxtEntity.builder()
+                .placeName(title)
+                .lat(lat)
+                .lng(lng)
+                .build();
+        return txtMapper.findMostRecentTxt(txtEntity);
     }
 
     @Override
-    public TxtEntity findMostPopularTxt() { return txtMapper.findMostPopularTxt();
+    public TxtEntity findMostPopularTxt(String title, double lat, double lng) {
+        TxtEntity txtEntity = TxtEntity.builder()
+                .placeName(title)
+                .lat(lat)
+                .lng(lng)
+                .build();
+        return txtMapper.findMostPopularTxt(txtEntity);
+    }
+
+    @Override
+    public List<TxtEntity> findAllRecentTxt(String title, double lat, double lng) {
+        log.info("title = {}, lat = {}, lng = {}", title, lat, lng);
+        TxtEntity txtEntity = TxtEntity.builder()
+                .placeName(title)
+                .lat(lat)
+                .lng(lng)
+                .build();
+
+        return txtMapper.findAllRecentTxt(txtEntity);
     }
 //
 //    @Override

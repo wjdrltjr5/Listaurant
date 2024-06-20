@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c"
+           uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -86,6 +87,24 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
+
+        <!-- 댓글 리스트 추가 부분 -->
+        <div class="card my-5">
+            <div class="card-header">
+                <h2>댓글 리스트</h2>
+            </div>
+            <div class="card-body">
+                <c:forEach var="comment" items="${comments}">
+                    <div class="comment">
+                        <p>${comment.text}</p>
+<%--                        <small>${comment.author} - ${comment.createdDate}</small>--%>
+                        <hr>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+        <!-- 댓글 리스트 추가 끝 -->
     </div>
 
 

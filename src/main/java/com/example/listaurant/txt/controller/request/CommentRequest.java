@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class CommentRequest {
 
     private Long txtId;
     private String placeName;
-    private LocalDate writtenDate;
+    private LocalDateTime writtenDate;
     private int recommend;
     private String text;
     private int scope;

@@ -1,11 +1,12 @@
 package com.example.listaurant.txt.infra;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 @Setter
@@ -13,7 +14,7 @@ public class TxtEntity {
 
     public Long txtId;
     public String placeName;
-    public LocalDate writtenDate;
+    public LocalDateTime writtenDate;
     public int recommend;
     public int scope;
     public String text;

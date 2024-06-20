@@ -9,12 +9,19 @@
         values ( #{placeName}, #{writtenDate}, #{recommend}, #{scope}, #{memberId}, #{text}, #{lat}, #{lng} )
     </insert>
 
-    <select id="findMostPopularTxt" parameterType="string" resultType="TxtEntity">
-        select * from txt order by recommend desc limit
+    <select id="findMostPopularTxt" parameterType="TxtEntity" resultType="TxtEntity">
+        select * from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
+        order by recommend desc limit 1
     </select>
 
-    <select id="findMostRecentTxt" resultType="TxtEntity">
-        select * from txt order by written_date desc limit
+    <select id="findMostRecentTxt" parameterType="TxtEntity" resultType="TxtEntity">
+        select * from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
+        order by written_date desc limit 1
+    </select>
+
+    <select id="findAllRecentTxt" parameterType="TxtEntity" resultType="TxtEntity">
+        select * from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
+        order by written_date desc
     </select>
 </mapper>
 

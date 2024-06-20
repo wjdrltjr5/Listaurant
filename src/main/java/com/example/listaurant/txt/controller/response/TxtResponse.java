@@ -4,6 +4,7 @@ import com.example.listaurant.txt.infra.TxtEntity;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 public class TxtResponse {
     private Long txtId;
     private String placeName;
-    private LocalDate writtenDate;
+    private LocalDateTime writtenDate;
     private int recommend;
     private int scope;
     private long memberId;
@@ -22,6 +23,9 @@ public class TxtResponse {
     private String text;
 
     public static TxtResponse from(TxtEntity txtEntity) {
+        if(txtEntity == null){
+            return new TxtResponse();
+        }
         return TxtResponse.builder()
                 .txtId(txtEntity.getTxtId())
                 .placeName(txtEntity.getPlaceName())

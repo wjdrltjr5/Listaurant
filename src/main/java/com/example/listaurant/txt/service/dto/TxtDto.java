@@ -5,6 +5,7 @@ import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -15,7 +16,7 @@ public class TxtDto {
 
     public Long txtId;
     public String placeName;
-    public LocalDate writtenDate;
+    public LocalDateTime writtenDate;
     public int recommend;
     public int scope;
     public String text;
