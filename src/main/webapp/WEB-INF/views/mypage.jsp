@@ -28,7 +28,11 @@
             </ul>
             <div class="tab-content mt-3" id="myTabContent">
                 <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                        <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="pno" class="form-label">Nickname</label>
+                        <input type="text" class="form-control" id="nickname"  readonly placeholder="${member.nickname}">
+                    </div>
+                    <div class="mb-3">
                             <label for="pno" class="form-label">Phone-Number</label>
                             <input type="tel" class="form-control" id="pno"  readonly placeholder="${member.pno}">
                         </div>

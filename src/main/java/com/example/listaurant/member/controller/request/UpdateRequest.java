@@ -11,6 +11,9 @@ public class UpdateRequest {
     Long memberId;
 
     @NotBlank(message = "필수 입력 값입니다.")
+    String nickname;
+
+    @NotBlank(message = "필수 입력 값입니다.")
     String pno;
 
 }

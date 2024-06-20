@@ -16,7 +16,9 @@ public class SignUpRequest {
     @NotBlank(message = "필수입력 값 입니다.")
     private String email;
 
-    @NotBlank(message = "필수입력 값 입니다.")
+    @NotBlank(message = "필수입력 값입니다.")
+    private String nickname;
+
     @Pattern(
             regexp = "^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$",
             message = "비밀번호는 특수문자포함 8글자 이상이어야 합니다."

@@ -11,12 +11,14 @@ import lombok.*;
 public class MemberResponse {
     private Long memberId;
     private String email;
+    private String nickname;
     private String pno;
 
     public static MemberResponse from(MemberEntity memberEntity){
         return MemberResponse.builder()
                 .memberId(memberEntity.getMemberId())
                 .email(memberEntity.getEmail())
+                .nickname(memberEntity.getNickname())
                 .pno(memberEntity.getPno())
                 .build();
     }
