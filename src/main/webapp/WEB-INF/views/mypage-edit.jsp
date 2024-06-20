@@ -8,6 +8,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
     <link href="bootstrap-5.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#nickname").keyup(function () {
+                console.log("입력되는지 확인");
+                $.ajax({
+                    url: '/nickname-check',
+                    method: 'get',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    // dataType: "text",
+                    data: {
+                        "nickname": $(this).val(),
+                        "memberId" : ${member.memberId}
+                    },
+                    success: function (result, status, xhr) {
+                        nickname = result
+                        if (nickname.result === true) {
+                            $("#nickname-check").text(nickname.txt).css('color', 'red')
+                        } else if (nickname.result === false) {
+                            $("#nickname-check").text(nickname.txt).css('color', 'blue')
+                        }
+
+                    },
+                    error: function () {
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -35,6 +65,7 @@
                             <label for="nickname" class="form-label">Nickname</label>
                             <input type="text" name="nickname" class="form-control" id="nickname" value="${member.nickname}">
                             <form:errors path="nickname" cssStyle=" color: red"/>
+                            <p id ="nickname-check"></p>
                         </div>
                         <div class="mb-3">
                             <label for="pno" class="form-label">Phone-Number</label>

@@ -22,7 +22,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/css/**","/assets/**","/images/**","/webjars/**","/js/**","/nickname-check").permitAll()
+                                "/css/**","/assets/**","/images/**","/webjars/**","/js/**"
+                                ,"/nickname-check", "/email-check").permitAll()
                         .requestMatchers("/","/sign-up","/login","/board","/temp-password").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.INCLUDE).permitAll()

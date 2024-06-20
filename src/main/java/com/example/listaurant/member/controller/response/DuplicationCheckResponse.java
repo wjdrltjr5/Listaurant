@@ -5,11 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PasswordCheckResponse {
+public class DuplicationCheckResponse {
     private String txt;
     private boolean result;
 
-    public PasswordCheckResponse(String txt, boolean result) {
+    public DuplicationCheckResponse(String txt, boolean result) {
         this.txt = txt;
         this.result = result;
     }
