@@ -39,6 +39,7 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByNickname(nickname).isPresent();
     }
 
+
     @Transactional(readOnly = true)
     @Override
     public Optional<MemberEntity> findByEmail(String email) {
