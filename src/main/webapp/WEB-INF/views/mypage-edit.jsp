@@ -7,9 +7,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
-    <link href="bootstrap-5.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../webjars/jquery/3.6.0/jquery.min.js"></script>
     <script>
+        let nickname;
+        function validate() {
+            if(nickname.result === true){
+                alert("닉네임 중복은 불가능 합니다.")
+                return false;
+            }else{
+                return true;
+            }
+        }
+
         $(document).ready(function() {
             $("#nickname").keyup(function () {
                 console.log("입력되는지 확인");
@@ -25,6 +35,7 @@
                     },
                     success: function (result, status, xhr) {
                         nickname = result
+                        console.log(nickname)
                         if (nickname.result === true) {
                             $("#nickname-check").text(nickname.txt).css('color', 'red')
                         } else if (nickname.result === false) {
@@ -60,7 +71,7 @@
             </ul>
             <div class="tab-content mt-3" id="myTabContent">
                 <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                    <form:form action="/mypage/update" method="post" modelAttribute="updateRequest">
+                    <form:form action="/mypage/update" method="post" modelAttribute="updateRequest" onsubmit="return validate()">
                         <div class="mb-3">
                             <label for="nickname" class="form-label">Nickname</label>
                             <input type="text" name="nickname" class="form-control" id="nickname" value="${member.nickname}">
@@ -79,7 +90,5 @@
         </div>
     </div>
 </div>
-
-<script src="bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>|
 </body>
 </html>

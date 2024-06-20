@@ -60,8 +60,7 @@ public class MemberController {
 
     @GetMapping( "/nickname-check")
     @ResponseBody
-    public DuplicationCheckResponse isDuplicationNickname(@RequestParam("nickname") String nickname,@RequestParam(required = false)Long memberId){
-        log.info("nickname : {}", nickname);
+    public DuplicationCheckResponse isDuplicationNickname(@RequestParam("nickname") String nickname,@RequestParam(value = "memberId",required = false)Long memberId){
         if(memberId == null){
             if(memberService.isDuplicationNickname(nickname)){
                 return new DuplicationCheckResponse("중복된 닉네임입니다.",true);
@@ -71,8 +70,12 @@ public class MemberController {
             MemberEntity memberEntity = memberService.findById(memberId).get();
             if(memberEntity.getNickname().equals(nickname)){
                 return new DuplicationCheckResponse( "사용가능한 닉네임입니다.",false);
-            }else {
-                return new DuplicationCheckResponse("중복된 닉네임입니다.",true);
+            }else{
+                if(memberService.isDuplicationNickname(nickname)){
+                    return new DuplicationCheckResponse("중복된 닉네임입니다.",true);
+                }else{
+                    return new DuplicationCheckResponse( "사용가능한 닉네임입니다.",false);
+                }
             }
         }
     }
