@@ -2,10 +2,12 @@ package com.example.listaurant.member.controller;
 
 import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.member.controller.request.SignUpRequest;
+import com.example.listaurant.member.controller.response.PasswordCheckResponse;
 import com.example.listaurant.member.service.dto.MemberDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,5 +56,15 @@ public class MemberController {
         log.info("email = {}",email);
         memberService.sendTempPassword(MemberDto.builder().email(email).build());
         return "redirect:/login";
+    }
+
+    @GetMapping( "/nickname-check")
+    @ResponseBody
+    public PasswordCheckResponse isDuplicationNickname(@RequestParam("nickname") String nickname){
+        log.info("nickname : {}", nickname);
+        if(memberService.isDuplicationNickname(nickname)){
+            return new PasswordCheckResponse("중복된 닉네임입니다.",true);
+        }
+        return new PasswordCheckResponse( "사용가능한 닉네입입니다.",false);
     }
 }

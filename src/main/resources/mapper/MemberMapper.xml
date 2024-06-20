@@ -16,6 +16,10 @@
         select * from member
         where member_id = #{memberId}
     </select>
+    <select id="findByNickname" parameterType="string" resultType="MemberEntity">
+        select * from member
+        where nickname = #{nickname}
+    </select>
     <update id="update" parameterType="MemberEntity">
         update member
         <set>

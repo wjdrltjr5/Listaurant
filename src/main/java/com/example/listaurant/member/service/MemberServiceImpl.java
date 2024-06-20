@@ -34,6 +34,11 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByEmail(email).isPresent();
     }
 
+    @Override
+    public boolean isDuplicationNickname(String nickname) {
+        return memberRepository.findByNickname(nickname).isPresent();
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Optional<MemberEntity> findByEmail(String email) {

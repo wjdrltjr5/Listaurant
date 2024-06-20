@@ -13,13 +13,15 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Signin Template · Bootstrap v5.3</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <title>회원가입</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
 
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-
+    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
     <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -101,11 +103,16 @@
         }
     </style>
     <script>
+        let nickname;
         function validateForm() {
             const password = document.getElementById("Password").value;
             const confirmPassword = document.getElementById("check-floatingPassword").value;
             const errorElement = document.getElementById("passwordCheckError");
             console.log(password, confirmPassword, errorElement)
+            if(nickname.result === true){
+                alert("닉네임 중복은 불가능 합니다.")
+                return false;
+            }
             if (password !== confirmPassword) {
                 errorElement.textContent = "비밀번호가 일치하지 않습니다.";
                 return false;
@@ -113,6 +120,34 @@
                 return true;
             }
         }
+
+        $(document).ready(function() {
+            $("#nickname").keyup(function () {
+                console.log("입력되는지 확인");
+                $.ajax({
+                    url: '/nickname-check',
+                    method: 'get',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    // dataType: "text",
+                    data: {
+                        "nickname": $(this).val()
+                    },
+                    success: function (result, status, xhr) {
+                        nickname = result
+                        if (nickname.result === true){
+                            $("#nickname-check").text(nickname.txt).css('color','red')
+                        }else if(nickname.result === false){
+                            $("#nickname-check").text(nickname.txt).css('color','blue')
+                        }
+
+                    },
+                    error: function () {
+                    }
+                });
+            });
+        });
+
     </script>
 
     <!-- Custom styles for this template -->
@@ -121,9 +156,9 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="d-flex align-items-center py-4 bg-body-tertiary">
-<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-    <symbol id="check2" viewBox="0 0 16 16">
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
     </symbol>
     <symbol id="circle-half" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
@@ -158,6 +193,7 @@
             <form:input path="nickname" class="form-control" id="nickname" placeholder="nickname"/>
             <label for="nickname">Nickname</label>
             <form:errors path="nickname" cssStyle=" color : red"/>
+            <p id ="nickname-check"></p>
         </div>
 
         <div class="form-floating mb-3">
