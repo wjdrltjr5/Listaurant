@@ -21,7 +21,7 @@ public class TxtServiceImpl implements TxtService {
                 .placeName(txtDto.getPlaceName())
                 .writtenDate(txtDto.getWrittenDate())
                 .recommend(txtDto.getRecommend())
-                .scope(txtDto.getRecommend())
+                .scope(txtDto.getScope())
                 .text(txtDto.getText())
                 .memberId(txtDto.getMemberId())
                 .lat(txtDto.getLat())
@@ -53,6 +53,11 @@ public class TxtServiceImpl implements TxtService {
     @Override
     public List<TxtEntity> findAllRecentTxt(String title, double lat, double lng) {
         return txtRepository.findAllRecentTxt(title, lat, lng);
+    }
+
+    @Override
+    public double getAvgScope(String title, double lat, double lng) {
+        return txtRepository.getAvgScope(title, lat, lng);
     }
 //
 //    @Override

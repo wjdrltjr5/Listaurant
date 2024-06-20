@@ -47,6 +47,18 @@ public class TxtRepositoryImpl implements TxtRepository {
                 .build();
         return txtMapper.findAllRecentTxt(txtEntity);
     }
+
+    @Override
+    public double getAvgScope(String title, double lat, double lng) {
+        TxtEntity txtEntity = TxtEntity.builder()
+                .placeName(title)
+                .lat(lat)
+                .lng(lng)
+                .build();
+        if(null == txtMapper.getAvgScope(txtEntity)) {
+            return 0;
+        } else return txtMapper.getAvgScope(txtEntity);
+    }
 //
 //    @Override
 //    public List<TxtEntity> findByRecent() { return txtMapper.findByRecent(); }

@@ -26,7 +26,6 @@ public class TxtResponse {
 
     public static TxtResponse from(TxtEntity txtEntity) {
         if(txtEntity == null){
-            log.info("null값입니당");
             return new TxtResponse();
         }
         return TxtResponse.builder()

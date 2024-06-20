@@ -20,10 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -44,6 +42,8 @@ public class IndexController {
 
         TxtResponse popResponse = TxtResponse.from(txtPopularEntity);
         TxtResponse recentResponse = TxtResponse.from(txtRecentEntity);
+        double avgScope = txtService.getAvgScope(title, changeNum(lat), changeNum(lng));
+        log.info("avgScope: {}" , avgScope);
 
         model.addAttribute("title",title);
         model.addAttribute("lat",lat);
@@ -51,7 +51,8 @@ public class IndexController {
         model.addAttribute("pop", popResponse);
         model.addAttribute("recent", recentResponse);
         model.addAttribute("comments", listRecentResponse);
-
+        model.addAttribute("avgScope", avgScope);
+        model.addAttribute("countComments", listRecentResponse.size());
         return "board";
     }
 
@@ -70,6 +71,7 @@ public class IndexController {
                            RedirectAttributes redirectAttributes) {
         double tmpLat = commentRequest.getLat();
         double tmpLng = commentRequest.getLng();
+
         MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
         commentRequest.setMemberId(memberEntity.getMemberId());
         commentRequest.setNickname(memberEntity.getNickname());

@@ -23,6 +23,10 @@
         select * from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
         order by written_date desc
     </select>
+
+    <select id="getAvgScope" parameterType="TxtEntity" resultType="java.lang.Double">
+        select avg(scope) from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
+    </select>
 </mapper>
 
 
