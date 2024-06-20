@@ -1,3 +1,7 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c"
+           uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,9 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Small Business - Start Bootstrap Template</title>
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Listaurant 페이지</title>
+    <!-- Core theme CSS (includes Bootstrap)-->:
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <style>
         #container {overflow:hidden;height:300px;position:relative;}
@@ -47,40 +50,95 @@
     </div>
     <!-- Content Row-->
     <div class="row gx-4 gx-lg-5">
-        <div class="col-md-4 mb-5">
+        <div class="col-md-4 mb-2">
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">평균 별점</h2><hr>
-                    <p class="card-text"></p>
+                    <p class="card-text">${avgScope}</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-5">
+        <div class="col-md-4 mb-2">
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">인기 댓글</h2><hr>
-                    <p class="card-text"></p>
+                    <p class="card-text" id="most-popular">${pop.text}</p>
+                    <small>${pop.nickname} - ${pop.writtenDate}</small>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-5">
+        <div class="col-md-4 mb-2">
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">최신 댓글</h2><hr>
-                    <p class="card-text">ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</p>
+                    <p class="card-text"  id="most-recent">${recent.text}</p>
+                    <small>${recent.nickname} - ${recent.writtenDate}</small>
                 </div>
             </div>
         </div>
-
         <div class="card text-white bg-secondary my-5 py-4 text-center" style="margin-bottom: 100px">
-            <div>
-                <input type="text" id="commentInput" name="txt" class="form-control" style="height: 40px;">
-            </div>
-            <button class="btn btn-primary w-100 py-2" id="submitComment" type="button">댓글 달기</button>
+            <form id="commentForm" action="/board/comment" method="post">
+                <div class="form-floating mb-3">
+                    <input type="hidden" name="placeName" value="${title}"/>
+                    <input type="hidden" name="lat" value="${lat}"/>
+                    <input type="hidden" name="lng" value="${lng}"/>
+                    <input type="text" class="form-control" id="Place-Comment" name="text" placeholder="Place-Comments" required/>
+                    <label for="Place-Comment">후기를 남겨주세요.</label>
+                </div>
+
+                <!-- 별점 입력 필드 추가 -->
+                <div class="form-group mb-3">
+                    <label for="rating">별점을 매겨주세요:</label>
+                    <div id="rating" class="d-flex justify-content-center">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="rating1" value="1" required>
+                            <label class="form-check-label" for="rating1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="rating2" value="2">
+                            <label class="form-check-label" for="rating2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="rating3" value="3">
+                            <label class="form-check-label" for="rating3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="rating4" value="4">
+                            <label class="form-check-label" for="rating4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scope" id="rating5" value="5">
+                            <label class="form-check-label" for="rating5">5</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-100 py-2" type="submit">댓글달기</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
         </div>
 
 
+        <!-- 댓글 리스트 추가 부분 -->
+        <div class="card my-5">
+            <div class="card-header">
+                <h2>댓글 리스트 (${countComments})</h2>
+            </div>
+            <div class="card-body">
+                <c:forEach var="comment" items="${comments}">
+                    <div class="comment">
+                        <p>${comment.text}</p>
+                        <small>${comment.nickname} - ${comment.writtenDate} - ${comment.scope}</small>
+                        <hr>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+        <!-- 댓글 리스트 추가 끝 -->
     </div>
+
+
 </div>
 <!-- Footer-->
 <!-- Core theme JS-->

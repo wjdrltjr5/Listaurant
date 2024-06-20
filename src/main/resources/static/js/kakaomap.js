@@ -250,10 +250,11 @@ function displayPagination(pagination) {
 function displayInfowindow(marker, title) {
     // marker의 위치를 가져옵니다.
     let position = marker.getPosition();
-    let lat = position.getLat();
-    let lng = position.getLng();
+    let lat = Math.round(position.getLat()*100000)/100000;
+    let lng = Math.round(position.getLng()*100000)/100000;
 
     // title과 marker의 위치를 URL 파라미터로 포함한 URL을 생성합니다.
+
     let url = `/board?title=${encodeURIComponent(title)}&lat=${lat}&lng=${lng}`;
 
     // 인포윈도우에 들어갈 HTML 콘텐츠를 생성합니다.

@@ -112,34 +112,6 @@ function getAddressFromCoords(lat, lng, callback) {
     });
 }
 
-document.getElementById('submitComment').addEventListener('click', function() {
-    var comment = document.getElementById('commentInput').value;
-
-    if (comment.trim() === "") {
-        alert("댓글을 입력하세요.");
-        return;
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/comments', true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // 성공적으로 댓글이 저장되었을 때의 처리
-            alert('댓글이 성공적으로 저장되었습니다.');
-            document.getElementById('commentInput').value = ""; // 입력 필드 초기화
-        } else if (xhr.readyState === 4) {
-            // 오류가 발생했을 때의 처리
-            alert('댓글 저장에 실패했습니다.');
-        }
-    };
-
-    var data = JSON.stringify({ comment: comment });
-    xhr.send(data);
-});
-
-
 // 페이지 로드 시 실행되는 함수
 window.onload = function() {
     // URL에서 title을 가져옵니다
@@ -168,5 +140,5 @@ window.onload = function() {
     } else {
         paragraph2.textContent = '유효한 주소를 찾을 수 없습니다.';
     }
-};
 
+};

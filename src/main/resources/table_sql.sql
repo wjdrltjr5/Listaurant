@@ -15,5 +15,6 @@ CREATE TABLE txt (
   scope INT,
   member_id INT,
   text varchar(8000),
+  nickname VARCHAR(255),
   FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
