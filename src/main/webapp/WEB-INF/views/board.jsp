@@ -12,7 +12,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Listaurant 페이지</title>
-    <!-- Core theme CSS (includes Bootstrap)-->
+    <!-- Core theme CSS (includes Bootstrap)-->:
     <link rel="stylesheet" type="text/css" href="/css/board.css">
     <style>
         #container {overflow:hidden;height:300px;position:relative;}
