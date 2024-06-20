@@ -104,6 +104,7 @@
     </style>
     <script>
         let nickname;
+        let email;
         function validateForm() {
             const password = document.getElementById("Password").value;
             const confirmPassword = document.getElementById("check-floatingPassword").value;
@@ -146,6 +147,69 @@
                     }
                 });
             });
+
+            $("#floatingInput").keyup(function () {
+                console.log("입력되는지 확인");
+                $.ajax({
+                    url: '/email-check',
+                    method: 'get',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    // dataType: "text",
+                    data: {
+                        "email": $(this).val()
+                    },
+                    success: function (result, status, xhr) {
+                        email = result
+                        if (email.result === true){
+                            $("#emailCheckError").text(email.txt).css('color','red')
+                        }else if(email.result === false){
+                            $("#emailCheckError").text(email.txt).css('color','blue')
+                        }
+
+                    },
+                    error: function () {
+                    }
+                });
+            });
+
+            $("#Password").keyup(function () {
+                console.log("입력되는지 확인");
+                let password = document.getElementById("Password").value;
+                let confirmPassword = document.getElementById("check-floatingPassword").value;
+                const errorElement = document.getElementById("passwordCheckError");
+                if(password === ""){
+                    errorElement.textContent = "";
+                }else {
+                    if (password !== confirmPassword) {
+                        errorElement.style.color = "red";
+                        errorElement.textContent = "비밀번호가 일치하지 않습니다.";
+                    }
+                    if(password === confirmPassword){
+                        errorElement.style.color = "blue";
+                        errorElement.textContent = "비밀번호 일치"
+                    }
+                }
+            })
+
+            $("#check-floatingPassword").keyup(function () {
+                console.log("입력되는지 확인");
+                let password = document.getElementById("Password").value;
+                let confirmPassword = document.getElementById("check-floatingPassword").value;
+                const errorElement = document.getElementById("passwordCheckError");
+                if(password === ""){
+                    errorElement.textContent = "";
+                }else{
+                    if (password !== confirmPassword) {
+                        errorElement.style.color = "red";
+                        errorElement.textContent = "비밀번호가 일치하지 않습니다.";
+                    }
+                    if(password === confirmPassword){
+                        errorElement.style.color = "blue";
+                        errorElement.textContent = "비밀번호 일치"
+                    }
+                }
+            })
         });
 
     </script>
@@ -181,7 +245,8 @@
         <div class="form-floating mb-3">
             <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
             <label for="floatingInput">Email address</label>
-            <form:errors path="email" cssStyle=" color : red"/>
+            <form:errors path="email" cssStyle=" color : red" id="email-check"/>
+            <div id="emailCheckError" style="color: red;"></div>
         </div>
         <spring:hasBindErrors name="signUpRequest">
             <c:forEach var="error" items="${errors.globalErrors}">
