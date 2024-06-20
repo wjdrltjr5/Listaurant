@@ -25,4 +25,5 @@ public class CommentRequest {
     private double lat;
     private double lng;
     private Long memberId;
+    private String nickname;
 }

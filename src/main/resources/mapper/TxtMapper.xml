@@ -5,8 +5,8 @@
 
 <mapper namespace="com.example.listaurant.txt.infra.TxtMapper">
     <insert id="saveTxt" parameterType="TxtEntity" useGeneratedKeys="true">
-        insert into txt ( place_name, written_date, recommend, scope, member_id, text, lat, lng )
-        values ( #{placeName}, #{writtenDate}, #{recommend}, #{scope}, #{memberId}, #{text}, #{lat}, #{lng} )
+        insert into txt ( place_name, written_date, recommend, scope, member_id, text, lat, lng, nickname )
+        values ( #{placeName}, #{writtenDate}, #{recommend}, #{scope}, #{memberId}, #{text}, #{lat}, #{lng}, #{nickname} )
     </insert>
 
     <select id="findMostPopularTxt" parameterType="TxtEntity" resultType="TxtEntity">

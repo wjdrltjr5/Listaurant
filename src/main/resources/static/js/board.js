@@ -141,5 +141,4 @@ window.onload = function() {
         paragraph2.textContent = '유효한 주소를 찾을 수 없습니다.';
     }
 
-    console.log(title, lat, lng);
 };

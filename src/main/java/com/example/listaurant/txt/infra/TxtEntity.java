@@ -21,4 +21,5 @@ public class TxtEntity {
     private double lat;
     private double lng;
     public Long memberId;
+    public String nickname;
 }

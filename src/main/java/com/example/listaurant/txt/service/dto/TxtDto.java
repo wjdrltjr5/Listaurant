@@ -23,6 +23,7 @@ public class TxtDto {
     private double lat;
     private double lng;
     public Long memberId;
+    public String nickname;
 
     public static TxtDto from(CommentRequest request){
         return TxtDto.builder()
@@ -35,6 +36,7 @@ public class TxtDto {
                 .memberId(request.getMemberId())
                 .lat(request.getLat())
                 .lng(request.getLng())
+                .nickname(request.getNickname())
                 .build();
     }
 }

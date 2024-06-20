@@ -2,8 +2,8 @@ package com.example.listaurant.txt.controller.response;
 
 import com.example.listaurant.txt.infra.TxtEntity;
 import lombok.*;
-
-import java.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 public class TxtResponse {
+    private static final Logger log = LoggerFactory.getLogger(TxtResponse.class);
     private Long txtId;
     private String placeName;
     private LocalDateTime writtenDate;
@@ -21,9 +22,11 @@ public class TxtResponse {
     private double lat;
     private double lng;
     private String text;
+    private String nickname;
 
     public static TxtResponse from(TxtEntity txtEntity) {
         if(txtEntity == null){
+            log.info("null값입니당");
             return new TxtResponse();
         }
         return TxtResponse.builder()
@@ -36,6 +39,7 @@ public class TxtResponse {
                 .text(txtEntity.getText())
                 .lat(txtEntity.getLat())
                 .lng(txtEntity.getLng())
+                .nickname(txtEntity.getNickname())
                 .build();
     }
 }

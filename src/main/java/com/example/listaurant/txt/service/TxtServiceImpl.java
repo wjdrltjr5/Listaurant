@@ -26,6 +26,7 @@ public class TxtServiceImpl implements TxtService {
                 .memberId(txtDto.getMemberId())
                 .lat(txtDto.getLat())
                 .lng(txtDto.getLng())
+                .nickname(txtDto.getNickname())
                 .build();
         txtRepository.saveTxt(txt);
     }

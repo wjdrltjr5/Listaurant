@@ -40,13 +40,11 @@ public class TxtRepositoryImpl implements TxtRepository {
 
     @Override
     public List<TxtEntity> findAllRecentTxt(String title, double lat, double lng) {
-        log.info("title = {}, lat = {}, lng = {}", title, lat, lng);
         TxtEntity txtEntity = TxtEntity.builder()
                 .placeName(title)
                 .lat(lat)
                 .lng(lng)
                 .build();
-
         return txtMapper.findAllRecentTxt(txtEntity);
     }
 //

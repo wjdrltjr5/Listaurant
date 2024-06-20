@@ -1,7 +1,9 @@
 package com.example.listaurant;
 
 
+import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.MemberDetails;
+import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.txt.controller.port.TxtService;
 import com.example.listaurant.txt.controller.request.CommentRequest;
 import com.example.listaurant.txt.controller.response.TxtResponse;
@@ -21,6 +23,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -29,32 +32,32 @@ import java.util.List;
 public class IndexController {
 
     private final TxtService txtService;
+    private final MemberService memberService;
+
 
     @GetMapping
     public String board(@RequestParam("title") String title, @RequestParam("lat") float lat,
                         @RequestParam("lng") float lng, Model model){
-        model.addAttribute("title",title);
-        model.addAttribute("lat",lat);
-        model.addAttribute("lng",lng);
-        log.info("get /board {},{},{}",title, lat, lng);
-
-        TxtEntity txtPopularEntity = txtService.findMostPopularTxt(title, changeAdr(lat), changeAdr(lng));
-        TxtEntity txtRecentEntity = txtService.findMostRecentTxt(title, changeAdr(lat), changeAdr(lng));
+        TxtEntity txtPopularEntity = txtService.findMostPopularTxt(title, changeNum(lat), changeNum(lng));
+        TxtEntity txtRecentEntity = txtService.findMostRecentTxt(title, changeNum(lat), changeNum(lng));
+        List<TxtEntity> listRecentResponse = txtService.findAllRecentTxt(title, changeNum(lat), changeNum(lng));
 
         TxtResponse popResponse = TxtResponse.from(txtPopularEntity);
         TxtResponse recentResponse = TxtResponse.from(txtRecentEntity);
-        List<TxtEntity> listRecentResponse = txtService.findAllRecentTxt(title, changeAdr(lat), changeAdr(lng));
+
+        model.addAttribute("title",title);
+        model.addAttribute("lat",lat);
+        model.addAttribute("lng",lng);
         model.addAttribute("pop", popResponse);
         model.addAttribute("recent", recentResponse);
         model.addAttribute("comments", listRecentResponse);
-        log.info("txtPopularEntity = {}",listRecentResponse);
+
         return "board";
     }
 
     @PostMapping
     public String boardComment(@RequestParam("title") String title, @RequestParam("lat") String lat,
                                @RequestParam("lng") String lng, Model model){
-        log.info("post /board {},{},{}" ,title, lat, lng);
         model.addAttribute(title, title);
         model.addAttribute(lat, lat);
         model.addAttribute(lng, lng);
@@ -65,33 +68,27 @@ public class IndexController {
     public String textSave(@Valid @ModelAttribute CommentRequest commentRequest,
                            @AuthenticationPrincipal MemberDetails memberDetails,
                            RedirectAttributes redirectAttributes) {
-        log.info("commnetRequest ={}", commentRequest);
-        commentRequest.setMemberId(memberDetails.getId());
+        double tmpLat = commentRequest.getLat();
+        double tmpLng = commentRequest.getLng();
+        MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
+        commentRequest.setMemberId(memberEntity.getMemberId());
+        commentRequest.setNickname(memberEntity.getNickname());
         commentRequest.setWrittenDate(LocalDateTime.now());
-        txtService.saveTxt(TxtDto.from(commentRequest));
+        commentRequest.setLat(changeNum(commentRequest.getLat()));
+        commentRequest.setLng(changeNum(commentRequest.getLng()));
 
         // RedirectAttributes에 필요한 파라미터 추가
         redirectAttributes.addAttribute("title", commentRequest.getPlaceName());
-        redirectAttributes.addAttribute("lat", commentRequest.getLat());
-        redirectAttributes.addAttribute("lng", commentRequest.getLng());
+        redirectAttributes.addAttribute("lat", tmpLat);
+        redirectAttributes.addAttribute("lng", tmpLng);
 
+        txtService.saveTxt(TxtDto.from(commentRequest));
         // 리다이렉트 URL 생성 및 반환
         return "redirect:/board?title={title}&lat={lat}&lng={lng}";
     }
 
-    public double changeAdr(double adr) {
-        // BigDecimal을 사용하여 숫자를 자르기
-        BigDecimal bd = new BigDecimal(adr);
-
-        // 정수부의 길이를 계산
-        int integerPartLength = bd.toBigInteger().toString().length();
-
-        // 정수부와 소수점 하나를 제외한 나머지 길이를 소수부로 사용
-        int decimalPlaces = 9 - integerPartLength - 1;
-
-        // 소수부의 자릿수 만큼 잘라내기
-        bd = bd.setScale(decimalPlaces, RoundingMode.DOWN);
-
+    public double changeNum(double num){
+        BigDecimal bd = new BigDecimal(num).setScale(5, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 }
