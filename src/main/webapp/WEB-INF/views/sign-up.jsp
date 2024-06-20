@@ -6,20 +6,22 @@
 
     <!doctype html>
 <html lang="en" data-bs-theme="auto">
-<head><script src="assets/js/color-modes.js"></script>
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Signin Template · Bootstrap v5.3</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <title>회원가입</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
 
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-
+    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
     <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -101,11 +103,16 @@
         }
     </style>
     <script>
+        let nickname;
         function validateForm() {
             const password = document.getElementById("Password").value;
             const confirmPassword = document.getElementById("check-floatingPassword").value;
             const errorElement = document.getElementById("passwordCheckError");
             console.log(password, confirmPassword, errorElement)
+            if(nickname.result === true){
+                alert("닉네임 중복은 불가능 합니다.")
+                return false;
+            }
             if (password !== confirmPassword) {
                 errorElement.textContent = "비밀번호가 일치하지 않습니다.";
                 return false;
@@ -113,6 +120,34 @@
                 return true;
             }
         }
+
+        $(document).ready(function() {
+            $("#nickname").keyup(function () {
+                console.log("입력되는지 확인");
+                $.ajax({
+                    url: '/nickname-check',
+                    method: 'get',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    // dataType: "text",
+                    data: {
+                        "nickname": $(this).val()
+                    },
+                    success: function (result, status, xhr) {
+                        nickname = result
+                        if (nickname.result === true){
+                            $("#nickname-check").text(nickname.txt).css('color','red')
+                        }else if(nickname.result === false){
+                            $("#nickname-check").text(nickname.txt).css('color','blue')
+                        }
+
+                    },
+                    error: function () {
+                    }
+                });
+            });
+        });
+
     </script>
 
     <!-- Custom styles for this template -->
@@ -121,9 +156,9 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="d-flex align-items-center py-4 bg-body-tertiary">
-<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-    <symbol id="check2" viewBox="0 0 16 16">
-        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
     </symbol>
     <symbol id="circle-half" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
@@ -136,47 +171,13 @@
         <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
     </symbol>
 </svg>
-
-<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-            id="bd-theme"
-            type="button"
-            aria-expanded="false"
-            data-bs-toggle="dropdown"
-            aria-label="Toggle theme (auto)">
-        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-        <li>
-            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-                Light
-                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-            </button>
-        </li>
-        <li>
-            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-                Dark
-                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-            </button>
-        </li>
-        <li>
-            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-                <svg class="bi me-2 opacity-50" width="1em" height="1em"><use href="#circle-half"></use></svg>
-                Auto
-                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-            </button>
-        </li>
-    </ul>
-</div>
-
-
 <main class="form-signin w-100 m-auto">
 
     <form:form onsubmit="return validateForm()" action="/sign-up" method="post" modelAttribute="signUpRequest">
-        <img class="mb-4" src="assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <div class="d-flex align-items-center">
+            <img class="mb-4" src="assets/brand/logo.png" alt="" width="72" height="57" style="border-radius: 50%;">
+            <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+        </div>
         <div class="form-floating mb-3">
             <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
             <label for="floatingInput">Email address</label>
@@ -187,6 +188,14 @@
                 <div class="error" style="color : red">${error.defaultMessage}</div>
             </c:forEach>
         </spring:hasBindErrors>
+
+        <div class="form-floating mb-3">
+            <form:input path="nickname" class="form-control" id="nickname" placeholder="nickname"/>
+            <label for="nickname">Nickname</label>
+            <form:errors path="nickname" cssStyle=" color : red"/>
+            <p id ="nickname-check"></p>
+        </div>
+
         <div class="form-floating mb-3">
             <form:password path="passwd" class="form-control" id="Password" placeholder="Password"/>
             <label for="Password">Password</label>
@@ -205,10 +214,9 @@
             <form:errors path="pno" cssStyle="color: red"/>
         </div>
 
-        <button class="btn btn-primary w-100 py-2" type="submit">Sign up</button>
+        <button class="btn btn-primary w-100 py-2" type="submit">회원가입</button>
 
-        <a href="/login" class="btn btn-primary w-100 py-2" type="submit" style="margin-top: 10px">login</a>
-        <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
+        <a href="/login" class="btn btn-primary w-100 py-2" type="submit" style="margin-top: 10px">로그인</a>
     </form:form>
 
 </main>

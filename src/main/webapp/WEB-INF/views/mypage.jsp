@@ -28,13 +28,17 @@
             </ul>
             <div class="tab-content mt-3" id="myTabContent">
                 <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                        <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="pno" class="form-label">Nickname</label>
+                        <input type="text" class="form-control" id="nickname"  readonly placeholder="${member.nickname}">
+                    </div>
+                    <div class="mb-3">
                             <label for="pno" class="form-label">Phone-Number</label>
                             <input type="tel" class="form-control" id="pno"  readonly placeholder="${member.pno}">
                         </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <button type="button" class="btn btn-secondary"><a style="color: white; text-decoration-line: none" class="btn-primary" href="/mypage/${member.memberId}">EDIT</a></button>
+                            <button type="button" class="btn btn-secondary"><a style="color: white; text-decoration-line: none" class="btn-primary" href="/mypage/${member.memberId}">정보수정</a></button>
                             <button type="button" class="btn btn-primary" ><a style="color: white; text-decoration-line: none" class="btn-primary" href="/mypage/password-update">비밀번호 변경</a></button>
                         </div>
                         <button type="button" class="btn btn-danger" onclick="confirmDeletion()">회원 탈퇴</button>

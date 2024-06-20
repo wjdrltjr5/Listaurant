@@ -28,6 +28,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
+    public Optional<MemberEntity> findByNickname(String nickname) {
+        return memberMapper.findByNickname(nickname);
+    }
+
+    @Override
     public void update(MemberEntity memberEntity) {
         memberMapper.update(memberEntity);
     }
@@ -36,4 +41,5 @@ public class MemberRepositoryImpl implements MemberRepository {
     public void delete(Long id) {
         memberMapper.delete(id);
     }
+
 }

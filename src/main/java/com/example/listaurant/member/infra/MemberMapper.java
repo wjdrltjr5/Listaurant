@@ -16,4 +16,6 @@ public interface MemberMapper {
     void update(MemberEntity memberEntity);
 
     void delete(Long id);
+
+    Optional<MemberEntity> findByNickname(String nickname);
 }

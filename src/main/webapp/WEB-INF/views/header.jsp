@@ -54,7 +54,10 @@
     </style>
 <body>
 <nav class="navbar">
-    <a class="navbar-brand" href="/">Listaurant</a>
+    <a class="navbar-brand" href="/">
+        <img src="assets/brand/logo.png" alt="" width="72" height="57" style="border-radius: 50%">
+        Listaurant
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>

@@ -16,6 +16,9 @@ public class SignUpRequest {
     @NotBlank(message = "필수입력 값 입니다.")
     private String email;
 
+    @NotBlank(message = "필수입력 값입니다.")
+    private String nickname;
+
     @NotBlank(message = "필수입력 값 입니다.")
     @Pattern(
             regexp = "^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$",

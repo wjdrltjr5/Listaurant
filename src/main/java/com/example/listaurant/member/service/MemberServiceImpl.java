@@ -24,13 +24,8 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public void save(MemberDto memberDto) {
-        MemberEntity member = MemberEntity.builder()
-                .email(memberDto.getEmail())
-                .pno(memberDto.getPno())
-                .passwd(passwordEncoder.encode(memberDto.getPasswd()))
-                .role("USER")
-                .build();
-        memberRepository.save(member);
+        memberDto.setPasswd(passwordEncoder.encode(memberDto.getPasswd()));
+        memberRepository.save(MemberEntity.from(memberDto));
     }
 
     @Transactional(readOnly = true)
@@ -38,6 +33,12 @@ public class MemberServiceImpl implements MemberService {
     public boolean isDuplicationEmail(String email) {
         return memberRepository.findByEmail(email).isPresent();
     }
+
+    @Override
+    public boolean isDuplicationNickname(String nickname) {
+        return memberRepository.findByNickname(nickname).isPresent();
+    }
+
 
     @Transactional(readOnly = true)
     @Override
@@ -53,11 +54,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void update(MemberDto memberDto) {
-        memberRepository.update(MemberEntity.builder().memberId(memberDto.getMemberId())
-                .pno(memberDto.getPno())
-                .passwd(memberDto.getPasswd())
-                .role(memberDto.getRole())
-                .build());
+        memberRepository.update(MemberEntity.from(memberDto));
     }
 
     @Override
