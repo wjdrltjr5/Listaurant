@@ -155,7 +155,7 @@
                             <p>${comment.text}</p>
                             <small class="d-flex justify-content-between align-items-center">
                     <span>
-                        ${comment.nickname} - ${comment.writtenDate} - ${comment.scope}
+                       작성자: ${comment.nickname} - 작성일: ${comment.writtenDate} - 별점: ${comment.scope}
                     </span>
                                 <span class="d-flex align-items-center">
                         <form action="/recommend" method="post">
@@ -222,7 +222,7 @@
                             <p>${popular.text}</p>
                             <small class="d-flex justify-content-between align-items-center">
                     <span>
-                        ${popular.nickname} - ${popular.writtenDate} - ${popular.scope}
+                       작성자: ${popular.nickname} - 작성일: ${popular.writtenDate} - 별점: ${popular.scope}
                     </span>
                                 <span class="d-flex align-items-center">
                         <form action="/recommend" method="post">
