@@ -177,19 +177,6 @@
                                 <button type="submit" class="btn btn-secondary btn-sm">수정</button>
                             </form>
                         </c:if>
-                        <script>
-                            console.log(${memberId});
-                        </script>
-                        <c:if test="${comment.memberId eq memberId}">
-                            <form action="/board/delete" method="post">
-                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
-                                <button type="submit" class="btn btn-danger btn-sm">삭제</button>
-                            </form>
-                            <form action="/board/edit" method="get">
-                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
-                                <button type="submit" class="btn btn-secondary btn-sm">수정</button>
-                            </form>
-                        </c:if>
                         <hr>
                     </div>
                 </c:forEach>
