@@ -11,7 +11,7 @@ ssginc 미니프로젝트2
 - git
 - gradle
 - jsp, bootstrap
-- spring boot, spring web,spring security, lombok, validation, java mail 
+- spring boot, spring web, mybatis, spring security, lombok, validation, java mail 
 
 ## 기능 요구사항
 - 지도
