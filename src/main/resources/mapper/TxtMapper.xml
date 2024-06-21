@@ -24,6 +24,10 @@
         order by written_date desc
     </select>
 
+    <select id="findByMemberId" parameterType="long" resultType="TxtEntity">
+        select * from txt where member_id = #{memberId}
+    </select>
+
     <select id="getAvgScope" parameterType="TxtEntity" resultType="java.lang.Double">
         select avg(scope) from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
     </select>

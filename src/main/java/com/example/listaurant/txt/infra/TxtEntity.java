@@ -1,5 +1,6 @@
 package com.example.listaurant.txt.infra;
 
+import com.example.listaurant.txt.service.dto.TxtDto;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -22,4 +23,19 @@ public class TxtEntity {
     private double lng;
     public Long memberId;
     public String nickname;
+
+    public TxtDto toDto(){
+        return TxtDto.builder()
+                .txtId(this.txtId)
+                .placeName(this.placeName)
+                .writtenDate(this.writtenDate)
+                .recommend(this.recommend)
+                .scope(this.scope)
+                .text(this.text)
+                .lat(this.lat)
+                .lng(this.lng)
+                .memberId(this.memberId)
+                .nickname(this.nickname)
+                .build();
+    }
 }

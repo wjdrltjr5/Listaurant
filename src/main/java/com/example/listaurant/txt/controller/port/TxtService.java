@@ -12,6 +12,7 @@ public interface TxtService {
     TxtEntity findMostRecentTxt(String title, double lat, double lng);
     TxtEntity findMostPopularTxt(String title, double lat, double lng);
     List<TxtEntity> findAllRecentTxt(String title, double lat, double lng);
+    List<TxtDto> findByMemberId(Long memberId);
 
     double getAvgScope(String title, double lat, double lng);
 //    List<TxtEntity> findByRecent();

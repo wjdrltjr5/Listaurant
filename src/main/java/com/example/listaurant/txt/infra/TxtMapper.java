@@ -1,5 +1,6 @@
 package com.example.listaurant.txt.infra;
 
+import com.example.listaurant.txt.service.dto.TxtDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface TxtMapper {
     Double getAvgScope(TxtEntity txtEntity);
 
     void plusOneRecommend(Long txtId);
+
+    List<TxtEntity> findByMemberId(Long memberId);
 //    List<TxtEntity> findByRecent();
 //    List<TxtEntity> findByPopular();
 //

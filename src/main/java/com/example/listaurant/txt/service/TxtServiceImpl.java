@@ -56,6 +56,11 @@ public class TxtServiceImpl implements TxtService {
     }
 
     @Override
+    public List<TxtDto> findByMemberId(Long memberId) {
+        return txtRepository.findByMemberId(memberId);
+    }
+
+    @Override
     public double getAvgScope(String title, double lat, double lng) {
         return txtRepository.getAvgScope(title, lat, lng);
     }

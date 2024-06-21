@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,7 +49,27 @@
         </div>
     </div>
 </div>
-<script>
+
+<hr>
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5">
+        <c:forEach var="comment" items="${commentList}">
+            <div class="col-md-4 mb-2">
+                <div class="card h-100 text-center">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <a href="/board?title=${comment.placeName}&lat=${comment.lat}&lng=${comment.lng}" style="text-decoration-line: none; color: black">
+                            <h2 class="card-title">${comment.placeName}</h2>
+                        </a>
+                        <p>  별점 : ${comment.scope}</p>
+                        <p class="card-text">${comment.text}</p>
+                        <p>${comment.writtenDate}</p>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+    <script>
     function confirmDeletion() {
         if (confirm("회원탈퇴 하시겠습니까?")) {
             window.location.href = "/mypage/delete";

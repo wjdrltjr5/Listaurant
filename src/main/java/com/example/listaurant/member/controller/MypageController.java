@@ -7,6 +7,8 @@ import com.example.listaurant.member.controller.response.MemberResponse;
 import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.MemberDetails;
 import com.example.listaurant.member.service.dto.MemberDto;
+import com.example.listaurant.txt.controller.port.TxtService;
+import com.example.listaurant.txt.service.dto.TxtDto;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
@@ -25,12 +29,15 @@ public class MypageController {
 
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+    private final TxtService txtService;
 
     @GetMapping
     public String mypage(@AuthenticationPrincipal MemberDetails memberDetails, Model model) {
         MemberDto memberDto = memberService.findById(memberDetails.getId()).get();
+        List<TxtDto> commentList = txtService.findByMemberId(memberDetails.getId());
         MemberResponse response = MemberResponse.from(memberDto);
         model.addAttribute("member", response);
+        model.addAttribute("commentList",commentList);
         return "mypage";
     }
 

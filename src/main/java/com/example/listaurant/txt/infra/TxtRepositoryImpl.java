@@ -1,5 +1,6 @@
 package com.example.listaurant.txt.infra;
 
+import com.example.listaurant.txt.service.dto.TxtDto;
 import com.example.listaurant.txt.service.port.TxtRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,11 @@ public class TxtRepositoryImpl implements TxtRepository {
     @Override
     public void plusOneRecommend(Long txtId) {
         txtMapper.plusOneRecommend(txtId);
+    }
+
+    @Override
+    public List<TxtDto> findByMemberId(Long memberId) {
+        return txtMapper.findByMemberId(memberId).stream().map(TxtEntity::toDto).toList();
     }
 //
 //    @Override
