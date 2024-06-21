@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="card text-white bg-secondary my-5 py-4 text-center" style="margin-bottom: 100px">
-            <form id="commentForm" action="/board/comment" method="post">
+            <form id="commentForm" action="/board/comment" method="get">
                 <div class="form-floating mb-3">
                     <input type="hidden" name="placeName" value="${title}"/>
                     <input type="hidden" name="lat" value="${lat}"/>
