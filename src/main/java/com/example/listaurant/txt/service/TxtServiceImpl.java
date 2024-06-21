@@ -31,15 +31,6 @@ public class TxtServiceImpl implements TxtService {
         txtRepository.saveTxt(txt);
     }
 
-//    @Override
-//    public void updateTxt(TxtDto txtDto) {
-//        txtRepository.updateTxt(TxtEntity.builder().memberId(txtDto.getTxtId())
-//                .writtenDate(txtDto.getWrittenDate())
-//                .scope(txtDto.getScope())
-//                .text(txtDto.getText())
-//                .build());
-//    }
-//
     @Override
     public TxtEntity findMostRecentTxt(String title,double lat, double lng) {
         return txtRepository.findMostRecentTxt(title, lat, lng);
@@ -56,6 +47,11 @@ public class TxtServiceImpl implements TxtService {
     }
 
     @Override
+    public List<TxtEntity> findAllPopularTxt(String title, double lat, double lng) {
+        return txtRepository.findAllPopularTxt(title, lat, lng);
+    }
+
+    @Override
     public List<TxtDto> findByMemberId(Long memberId) {
         return txtRepository.findByMemberId(memberId);
     }
@@ -69,19 +65,24 @@ public class TxtServiceImpl implements TxtService {
     public void plusOneRecommend(Long txtId) {
         txtRepository.plusOneRecommend(txtId);
     }
-//
-//    @Override
-//    public List<TxtEntity> findByRecent() {
-//        return List.of();
-//    }
-//
-//    @Override
-//    public List<TxtEntity> findByPopular() {
-//        return List.of();
-//    }
-//
-//    @Override
-//    public void deleteTxt(Long id) {
 
-//    }
+    @Override
+    public void deleteTxt(Long txtId) { txtRepository.deleteTxt(txtId); }
+
+    @Override
+    public void updateTxt(TxtDto txtDto) {
+        TxtEntity txt = TxtEntity.builder()
+                .txtId(txtDto.getTxtId())
+                .placeName(txtDto.getPlaceName())
+                .writtenDate(txtDto.getWrittenDate())
+                .recommend(txtDto.getRecommend())
+                .scope(txtDto.getScope())
+                .text(txtDto.getText())
+                .memberId(txtDto.getMemberId())
+                .lat(txtDto.getLat())
+                .lng(txtDto.getLng())
+                .nickname(txtDto.getNickname())
+                .build();
+
+        txtRepository.updateTxt(txt); }
 }

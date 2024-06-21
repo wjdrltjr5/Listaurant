@@ -31,7 +31,7 @@ function setPlacePosition(lat, lng) {
     // 로드뷰 객체를 생성합니다
     roadview = new kakao.maps.Roadview(rvContainer);
     var roadviewClient = new kakao.maps.RoadviewClient();
-    roadviewClient.getNearestPanoId(placePosition, 50, function(panoId) {
+    roadviewClient.getNearestPanoId(placePosition, 50, function (panoId) {
         roadview.setPanoId(panoId, placePosition); //panoId와 중심좌표를 통해 로드뷰 실행
     });
     // 로드뷰의 위치를 특정 장소를 포함하는 파노라마 ID로 설정합니다
@@ -52,7 +52,7 @@ function setPlacePosition(lat, lng) {
     });
 
     // 로드뷰 초기화가 완료되면
-    kakao.maps.event.addListener(roadview, 'init', function() {
+    kakao.maps.event.addListener(roadview, 'init', function () {
 
         // 로드뷰에 특정 장소를 표시할 마커를 생성하고 로드뷰 위에 표시합니다
         rvMarker = new kakao.maps.Marker({
@@ -67,7 +67,7 @@ function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const lat = parseFloat(params.get('lat'));
     const lng = parseFloat(params.get('lng'));
-    return { lat, lng };
+    return {lat, lng};
 }
 
 // 지도와 로드뷰를 감싸고 있는 div의 class를 변경하여 지도를 숨기거나 보이게 하는 함수입니다
@@ -82,13 +82,14 @@ function toggleMap(active) {
 }
 
 // URL 파라미터로부터 초기 위치를 설정합니다
-const { lat, lng } = getUrlParams();
+const {lat, lng} = getUrlParams();
 if (!isNaN(lat) && !isNaN(lng)) {
     setPlacePosition(lat, lng);
 } else {
     // URL에 파라미터가 없거나 잘못된 경우 기본 위치를 설정합니다
     setPlacePosition(33.450701, 126.570667);
 }
+
 // URL에서 title 파라미터 값을 가져오는 함수
 function getTitleFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -101,7 +102,7 @@ var geocoder = new kakao.maps.services.Geocoder();
 // 주어진 위도와 경도로 주소를 반환하는 함수
 function getAddressFromCoords(lat, lng, callback) {
     var coords = new kakao.maps.LatLng(lat, lng);
-    geocoder.coord2Address(coords.getLng(), coords.getLat(), function(result, status) {
+    geocoder.coord2Address(coords.getLng(), coords.getLat(), function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
             var detailAddr = !!result[0].road_address ? '도로명주소 : ' + result[0].road_address.address_name : '';
             detailAddr += ' 지번 주소 : ' + result[0].address.address_name;
@@ -113,7 +114,7 @@ function getAddressFromCoords(lat, lng, callback) {
 }
 
 // 페이지 로드 시 실행되는 함수
-window.onload = function() {
+window.onload = function () {
     // URL에서 title을 가져옵니다
     const title = getTitleFromUrl();
 
@@ -134,7 +135,7 @@ window.onload = function() {
 
     // 위도와 경도가 유효한 경우 주소를 가져와 두 번째 p 요소에 추가합니다
     if (!isNaN(lat) && !isNaN(lng)) {
-        getAddressFromCoords(lat, lng, function(address) {
+        getAddressFromCoords(lat, lng, function (address) {
             paragraph2.textContent = address;
         });
     } else {
@@ -142,3 +143,40 @@ window.onload = function() {
     }
 
 };
+
+function confirmTxtDeletion() {
+    return confirm("정말로 삭제하시겠습니까?");
+}
+
+function editComment(commentId, text, scope) {
+    // Hide the comment display div
+    document.getElementById('comment-' + commentId).style.display = 'none';
+    // Show the comment edit div
+    document.getElementById('edit-comment-' + commentId).style.display = 'block';
+}
+
+function cancelEdit(commentId) {
+    // Show the comment display div
+    document.getElementById('comment-' + commentId).style.display = 'block';
+    // Hide the comment edit div
+    document.getElementById('edit-comment-' + commentId).style.display = 'none';
+}
+
+
+// 최신순 댓글 목록을 보이도록 설정
+document.getElementById("recentComments").style.display = "block";
+document.getElementById("popularComments").style.display = "none";
+
+// 최신순 버튼 클릭 시
+document.getElementById("recentCommentsBtn").addEventListener("click", function() {
+    document.getElementById("recentComments").style.display = "block";
+    document.getElementById("popularComments").style.display = "none";
+});
+
+// 인기순 버튼 클릭 시
+document.getElementById("popularCommentsBtn").addEventListener("click", function() {
+    document.getElementById("recentComments").style.display = "none";
+    document.getElementById("popularComments").style.display = "block";
+});
+
+

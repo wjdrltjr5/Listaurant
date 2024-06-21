@@ -12,6 +12,7 @@ public interface TxtMapper {
     TxtEntity findMostRecentTxt(TxtEntity txtEntity);
     TxtEntity findMostPopularTxt(TxtEntity txtEntity);
     List<TxtEntity> findAllRecentTxt(TxtEntity txtEntity);
+    List<TxtEntity> findAllPopularTxt(TxtEntity txtEntity);
     Double getAvgScope(TxtEntity txtEntity);
 
     void plusOneRecommend(Long txtId);
@@ -22,6 +23,7 @@ public interface TxtMapper {
 //
 //    void updateTxt(TxtEntity txtEntity);
 //
-//    void deleteTxt(Long id);
+    void deleteTxt(Long txtId);
 
+    void updateTxt(TxtEntity txtEntity);
 }

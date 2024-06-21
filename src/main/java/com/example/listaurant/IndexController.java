@@ -1,11 +1,11 @@
 package com.example.listaurant;
 
-
 import com.example.listaurant.member.service.MemberDetails;
 import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.member.service.dto.MemberDto;
 import com.example.listaurant.txt.controller.port.TxtService;
 import com.example.listaurant.txt.controller.request.CommentRequest;
+import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
 import com.example.listaurant.txt.controller.response.TxtResponse;
 import com.example.listaurant.txt.infra.TxtEntity;
 import com.example.listaurant.txt.service.dto.TxtDto;
@@ -39,13 +39,11 @@ public class IndexController {
         TxtEntity txtPopularEntity = txtService.findMostPopularTxt(title, changeNum(lat), changeNum(lng));
         TxtEntity txtRecentEntity = txtService.findMostRecentTxt(title, changeNum(lat), changeNum(lng));
         List<TxtEntity> listRecentResponse = txtService.findAllRecentTxt(title, changeNum(lat), changeNum(lng));
-
-
+        List<TxtEntity> listPopularResponse = txtService.findAllPopularTxt(title, changeNum(lat), changeNum(lng));
 
         TxtResponse popResponse = TxtResponse.from(txtPopularEntity);
         TxtResponse recentResponse = TxtResponse.from(txtRecentEntity);
         double avgScope = txtService.getAvgScope(title, changeNum(lat), changeNum(lng));
-        log.info("avgScope: {}", avgScope);
 
         // 모델에 필요한 데이터 추가
         if (memberDetails != null){
@@ -58,6 +56,7 @@ public class IndexController {
         model.addAttribute("pop", popResponse);
         model.addAttribute("recent", recentResponse);
         model.addAttribute("comments", listRecentResponse);
+        model.addAttribute("populars", listPopularResponse);
         model.addAttribute("avgScope", avgScope);
         model.addAttribute("countComments", listRecentResponse.size());
         return "board";
@@ -96,9 +95,40 @@ public class IndexController {
         return "redirect:/board?title={title}&lat={lat}&lng={lng}";
     }
 
+    @PostMapping("/delete")
+    public String textDelete(@RequestParam("title") String title, @RequestParam("lat") float lat,
+                             @RequestParam("lng") float lng, @RequestParam("commentId") long txtId,
+                             RedirectAttributes redirectAttributes) {
+
+        txtService.deleteTxt(txtId);
+
+        redirectAttributes.addAttribute("title", title);
+        redirectAttributes.addAttribute("lat", lat);
+        redirectAttributes.addAttribute("lng", lng);
+
+        return "redirect:/board?title={title}&lat={lat}&lng={lng}";
+    }
+
+    @PostMapping("/update")
+    public String textUpdate(@ModelAttribute UpdateTxtRequest updateTxtRequest,
+                             @RequestParam("title") String title, @RequestParam("lat") float lat,
+                             @RequestParam("lng") float lng, @RequestParam("commentId") long txtId,
+                             @RequestParam("text") String text, RedirectAttributes redirectAttributes) {
+        log.info("adfsafas");
+
+        updateTxtRequest.setTxtId(txtId);
+        updateTxtRequest.setText(text);
+        redirectAttributes.addAttribute("title", title);
+        redirectAttributes.addAttribute("lat", lat);
+        redirectAttributes.addAttribute("lng", lng);
+
+        txtService.updateTxt(TxtDto.from(updateTxtRequest));
+        // 리다이렉트 URL 생성 및 반환
+        return "redirect:/board?title={title}&lat={lat}&lng={lng}";
+    }
 
     public double changeNum(double num){
-        BigDecimal bd = new BigDecimal(num).setScale(5, RoundingMode.HALF_UP);
+        BigDecimal bd = new BigDecimal(num).setScale(4, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 }

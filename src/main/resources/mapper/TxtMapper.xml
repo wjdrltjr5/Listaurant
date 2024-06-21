@@ -24,6 +24,11 @@
         order by written_date desc
     </select>
 
+    <select id="findAllPopularTxt" parameterType="TxtEntity" resultType="TxtEntity">
+        select * from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
+        order by recommend desc
+    </select>
+
     <select id="findByMemberId" parameterType="long" resultType="TxtEntity">
         select * from txt where member_id = #{memberId}
     </select>
@@ -34,6 +39,17 @@
 
     <update id="plusOneRecommend" parameterType="long">
         update txt set recommend = recommend + 1 where txt_id = #{txtId}
+    </update>
+
+    <delete id="deleteTxt" parameterType="long">
+        delete from txt where txt_id = #{txtId}
+    </delete>
+
+    <update id="updateTxt" parameterType="TxtEntity">
+        update txt
+        SET text = #{text},
+        scope = #{scope}
+        WHERE txt_id = #{txtId}
     </update>
 </mapper>
 

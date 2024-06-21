@@ -7,12 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 @RequiredArgsConstructor
 @Repository
 @Slf4j
-public class TxtRepositoryImpl implements TxtRepository {
+public class TxtRepositoryImpl<Map> implements TxtRepository {
 
     private final TxtMapper txtMapper;
 
@@ -50,6 +53,16 @@ public class TxtRepositoryImpl implements TxtRepository {
     }
 
     @Override
+    public List<TxtEntity> findAllPopularTxt(String title, double lat, double lng) {
+        TxtEntity txtEntity = TxtEntity.builder()
+                .placeName(title)
+                .lat(lat)
+                .lng(lng)
+                .build();
+        return txtMapper.findAllPopularTxt(txtEntity);
+    }
+
+    @Override
     public double getAvgScope(String title, double lat, double lng) {
         TxtEntity txtEntity = TxtEntity.builder()
                 .placeName(title)
@@ -77,10 +90,11 @@ public class TxtRepositoryImpl implements TxtRepository {
 //    @Override
 //    public List<TxtEntity> findByPopular() { return txtMapper.findByPopular();    }
 //
-//    @Override
-//    public void updateTxt(TxtEntity txtEntity) { txtMapper.updateTxt(txtEntity);
-//    }
-//
-//    @Override
-//    public void deleteTxt(Long id) { txtMapper.deleteTxt(id); }
+
+    @Override
+    public void deleteTxt(Long txtId) { txtMapper.deleteTxt(txtId); }
+
+    @Override
+    public void updateTxt(TxtEntity txtEntity) {
+        txtMapper.updateTxt(txtEntity); }
 }

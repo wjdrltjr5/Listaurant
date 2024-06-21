@@ -140,51 +140,151 @@
 
         <!-- 댓글 리스트 추가 부분 -->
         <div class="card my-5">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h2>댓글 리스트 (${countComments})</h2>
-            </div>
-            <div class="card-body">
-                <div class="comments-container">
-                <c:forEach var="comment" items="${comments}">
-                    <div class="comment">
-                        <p>${comment.text}</p>
-                        <small class="d-flex justify-content-between align-items-center">
-                             <span>
-                                ${comment.nickname} - ${comment.writtenDate} - ${comment.scope}
-                             </span>
-                            <span class="d-flex align-items-center">
-                                <form action="/recommend" method="post">
-                                    <input type="hidden" name="txtId" value="${comment.txtId}"/>
-                                    <input type="hidden" name="title" value="${title}"/>
-                                    <input type="hidden" name="lat" value="${lat}">
-                                    <input type="hidden" name="lng" value="${lng}">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    <input type="image" name="submit" id="recommend" src="images/reicon.png" alt="" width="20" height="20" class="me-1"/>
-                                </form>
-                                ${comment.recommend}
-                            </span>
-                        </small>
-                        <script>
-                            console.log(${memberId});
-                        </script>
-                        <c:if test="${comment.memberId eq memberId}">
-                            <form action="/board/delete" method="post">
-                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
-                                <button type="submit" class="btn btn-danger btn-sm">삭제</button>
-                            </form>
-                            <form action="/board/edit" method="get">
-                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
-                                <button type="submit" class="btn btn-secondary btn-sm">수정</button>
-                            </form>
-                        </c:if>
-                        <hr>
-                    </div>
-                </c:forEach>
+                <div class="d-flex">
+                    <button id="recentCommentsBtn" class="btn btn-primary me-2">최신순</button>
+                    <button id="popularCommentsBtn" class="btn btn-primary">인기순</button>
                 </div>
             </div>
 
+            <div id="recentComments" class="card-body">
+                <div class="comments-container">
+                    <c:forEach var="comment" items="${comments}">
+                        <div class="comment">
+                            <p>${comment.text}</p>
+                            <small class="d-flex justify-content-between align-items-center">
+                    <span>
+                        ${comment.nickname} - ${comment.writtenDate} - ${comment.scope}
+                    </span>
+                                <span class="d-flex align-items-center">
+                        <form action="/recommend" method="post">
+                            <input type="hidden" name="txtId" value="${comment.txtId}"/>
+                            <input type="hidden" name="title" value="${title}"/>
+                            <input type="hidden" name="lat" value="${lat}">
+                            <input type="hidden" name="lng" value="${lng}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="image" name="submit" id="recommend" src="images/reicon.png" alt="" width="20" height="20" class="me-1"/>
+                        </form>
+                        ${comment.recommend}
+                    </span>
+                            </small>
+                            <c:if test="${comment.memberId eq memberId}">
+                                <div id="comment-${comment.txtId}" class="comment d-flex align-items-center">
+                                    <form action="/board/delete" method="post" onsubmit="return confirmTxtDeletion();">
+                                        <input type="hidden" name="commentId" value="${comment.txtId}" />
+                                        <input type="hidden" name="title" value="${title}"/>
+                                        <input type="hidden" name="lat" value="${lat}"/>
+                                        <input type="hidden" name="lng" value="${lng}"/>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                                    </form>
 
+                                    <button class="btn btn-secondary btn-sm" onclick="editComment(${comment.txtId}, '${comment.text}', ${comment.scope})">수정</button>
+                                    <hr>
+                                </div>
+                                <div id="edit-comment-${comment.txtId}" style="display: none;">
+                                    <form action="/board/update" method="post">
+                                        <input type="hidden" name="commentId" value="${comment.txtId}" />
+                                        <input type="hidden" name="title" value="${title}"/>
+                                        <input type="hidden" name="lat" value="${lat}"/>
+                                        <input type="hidden" name="lng" value="${lng}"/>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="text">${comment.text}</textarea>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="rating">별점을 매겨주세요:</label>
+                                            <div id="re_rating" class="d-flex justify-content-center">
+                                                <c:forEach var="i" begin="1" end="5">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="scope" id="rating${i}" value="${i}" ${comment.scope eq i ? 'checked' : ''}>
+                                                        <label class="form-check-label" for="rating${i}">${i}</label>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-sm">저장</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="cancelEdit(${comment.txtId})">취소</button>
+                                    </form>
+                                </div>
+                            </c:if>
+                            <hr>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+
+            <div id="popularComments" class="card-body">
+                <div class="comments-container">
+                    <c:forEach var="popular" items="${populars}">
+                        <div class="comment">
+                            <p>${popular.text}</p>
+                            <small class="d-flex justify-content-between align-items-center">
+                    <span>
+                        ${popular.nickname} - ${popular.writtenDate} - ${popular.scope}
+                    </span>
+                                <span class="d-flex align-items-center">
+                        <form action="/recommend" method="post">
+                            <input type="hidden" name="txtId" value="${popular.txtId}"/>
+                            <input type="hidden" name="title" value="${title}"/>
+                            <input type="hidden" name="lat" value="${lat}">
+                            <input type="hidden" name="lng" value="${lng}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="image" name="submit" id="recommend" src="images/reicon.png" alt="" width="20" height="20" class="me-1"/>
+                        </form>
+                        ${popular.recommend}
+                    </span>
+                            </small>
+                            <c:if test="${popular.memberId eq memberId}">
+                                <div id="comment-${popular.txtId}" class="comment d-flex align-items-center">
+                                    <form action="/board/delete" method="post" onsubmit="return confirmTxtDeletion();">
+                                        <input type="hidden" name="commentId" value="${popular.txtId}" />
+                                        <input type="hidden" name="title" value="${title}"/>
+                                        <input type="hidden" name="lat" value="${lat}"/>
+                                        <input type="hidden" name="lng" value="${lng}"/>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                                    </form>
+
+                                    <button class="btn btn-secondary btn-sm" onclick="editComment(${popular.txtId}, '${popular.text}', ${popular.scope})">수정</button>
+                                    <hr>
+                                </div>
+                                <div id="edit-comment-${popular.txtId}" style="display: none;">
+                                    <form action="/board/update" method="post">
+                                        <input type="hidden" name="commentId" value="${popular.txtId}" />
+                                        <input type="hidden" name="title" value="${title}"/>
+                                        <input type="hidden" name="lat" value="${lat}"/>
+                                        <input type="hidden" name="lng" value="${lng}"/>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="text">${popular.text}</textarea>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="rating">별점을 매겨주세요:</label>
+                                            <div id="re_rating2" class="d-flex justify-content-center">
+                                                <c:forEach var="i" begin="1" end="5">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="scope" id="rating${i}" value="${i}" ${popular.scope eq i ? 'checked' : ''}>
+                                                        <label class="form-check-label" for="rating${i}">${i}</label>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-sm">저장</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="cancelEdit(${popular.txtId})">취소</button>
+                                    </form>
+                                </div>
+                            </c:if>
+                            <hr>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
         </div>
+
+
+    </div>
         <!-- 댓글 리스트 추가 끝 -->
     </div>
 </div>
