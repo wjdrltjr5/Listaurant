@@ -135,7 +135,7 @@
         <c:if test = "${!empty message}">
             <div class="d-flex align-items-center">
                 <img class="mb-4" src="assets/brand/logo.png" alt="" width="72" height="57" style="border-radius: 50%;">
-                <h1 class="h3 mb-3 fw-normal" style="color: red">${message}</h1>
+                <p style="color: red ; font-size: 0.8rem">${message}</p>
             </div>
         </c:if>
         <div class="form-floating">
