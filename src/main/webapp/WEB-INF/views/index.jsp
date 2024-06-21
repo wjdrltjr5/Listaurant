@@ -14,7 +14,8 @@
 
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-    <a href="javascript:" class="btn_comm btn_resetMap" onclick="setCurrentPosition()"><span class="screen_out">현재 위치</span></a>
+    <a href="javascript:" class="btn_comm btn_resetMap" onclick="setCurrentPosition()"><span class="screen_out"><img
+            src="images/reicon.png" alt=""></span></a>
     <div id="menu_wrap" class="bg_white">
         <div class="option">
             <div>
