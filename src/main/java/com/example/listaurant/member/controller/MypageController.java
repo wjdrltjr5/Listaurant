@@ -28,16 +28,16 @@ public class MypageController {
 
     @GetMapping
     public String mypage(@AuthenticationPrincipal MemberDetails memberDetails, Model model) {
-        MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
-        MemberResponse response = MemberResponse.from(memberEntity);
+        MemberDto memberDto = memberService.findById(memberDetails.getId()).get();
+        MemberResponse response = MemberResponse.from(memberDto);
         model.addAttribute("member", response);
         return "mypage";
     }
 
     @GetMapping("/{memberId}")
     public String updateForm(@PathVariable("memberId") Long memberId, Model model) {
-        MemberEntity memberEntity = memberService.findById(memberId).orElseThrow(() -> new UsernameNotFoundException("회원 정보가 없습니다."));
-        MemberResponse response = MemberResponse.from(memberEntity);
+        MemberDto memberDto = memberService.findById(memberId).orElseThrow(() -> new UsernameNotFoundException("회원 정보가 없습니다."));
+        MemberResponse response = MemberResponse.from(memberDto);
         model.addAttribute("member", response);
         return "mypage-edit";
     }

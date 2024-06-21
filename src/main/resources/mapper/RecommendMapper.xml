@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.listaurant.recommend.repository.RecommendMapper">
+    <insert id="save" parameterType="RecommendEntity">
+        insert into recommend_check (txt_id, member_id)
+        values (#{txt_id}, #{member_id} )
+    </insert>
+    <select id="findByTxtIdAndMemberId" parameterType="RecommendEntity" resultType="RecommendEntity">
+        select * from member
+        where txt_id = #{txt_id} and member_id = #{memberId}
+    </select>
+    <delete id="delete" parameterType="RecommendEntity">
+        delete from member where txt_id = #{txt_id} and member_id = #{memberId}
+    </delete>
+</mapper>
+
+

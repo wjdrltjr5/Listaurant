@@ -1,3 +1,7 @@
+drop table recommend_check;
+drop table txt;
+drop table member;
+
 CREATE TABLE member (
   member_id INT PRIMARY KEY AUTO_INCREMENT,
   passwd VARCHAR(255),
@@ -21,9 +25,13 @@ CREATE TABLE txt (
   FOREIGN KEY (member_id) REFERENCES member(member_id)
 );
 
-create table recommendCheck)
+create table recommend_check(
     txt_id Int,
     member_id INT,
     FOREIGN KEY (member_id) REFERENCES member(member_id),
     FOREIGN KEY (txt_id) REFERENCES txt(txt_id)
 );
+
+select * from member;
+select * from recommend_check;
+select * from txt;

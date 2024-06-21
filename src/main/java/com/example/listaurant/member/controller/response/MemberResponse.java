@@ -1,6 +1,7 @@
 package com.example.listaurant.member.controller.response;
 
 import com.example.listaurant.member.infra.MemberEntity;
+import com.example.listaurant.member.service.dto.MemberDto;
 import lombok.*;
 
 @NoArgsConstructor
@@ -14,12 +15,12 @@ public class MemberResponse {
     private String nickname;
     private String pno;
 
-    public static MemberResponse from(MemberEntity memberEntity){
+    public static MemberResponse from(MemberDto memberDto){
         return MemberResponse.builder()
-                .memberId(memberEntity.getMemberId())
-                .email(memberEntity.getEmail())
-                .nickname(memberEntity.getNickname())
-                .pno(memberEntity.getPno())
+                .memberId(memberDto.getMemberId())
+                .email(memberDto.getEmail())
+                .nickname(memberDto.getNickname())
+                .pno(memberDto.getPno())
                 .build();
     }
 }

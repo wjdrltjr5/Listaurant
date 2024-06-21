@@ -26,4 +26,15 @@ public class MemberEntity {
                 .role(dto.getRole())
                 .build();
     }
+
+    public MemberDto toDto(){
+        return MemberDto.builder()
+                .memberId(this.memberId)
+                .email(this.email)
+                .nickname(this.nickname)
+                .passwd(this.passwd)
+                .pno(this.pno)
+                .role(this.role)
+                .build();
+    }
 }

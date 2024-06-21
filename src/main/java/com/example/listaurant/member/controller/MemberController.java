@@ -3,7 +3,6 @@ package com.example.listaurant.member.controller;
 import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.member.controller.request.SignUpRequest;
 import com.example.listaurant.member.controller.response.DuplicationCheckResponse;
-import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.dto.MemberDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,6 @@ public class MemberController {
 
     @PostMapping("/sign-up")
     public String signUp(@Valid @ModelAttribute SignUpRequest signUpRequest, BindingResult br) {
-        log.info("signUpRequest = {}",signUpRequest);
         if (memberService.isDuplicationEmail(signUpRequest.getEmail())) {
             br.reject("globalError", "이미 존재하는 사용자입니다.");
             return "sign-up";
@@ -53,7 +51,6 @@ public class MemberController {
 
     @PostMapping("/temp-password")
     public String sendTempPassword(@RequestParam("email")String email){
-        log.info("email = {}",email);
         memberService.sendTempPassword(MemberDto.builder().email(email).build());
         return "redirect:/login";
     }
@@ -67,8 +64,8 @@ public class MemberController {
             }
             return new DuplicationCheckResponse( "사용가능한 닉네임입니다.",false);
         }else {
-            MemberEntity memberEntity = memberService.findById(memberId).get();
-            if(memberEntity.getNickname().equals(nickname)){
+            MemberDto memberDto = memberService.findById(memberId).get();
+            if(memberDto.getNickname().equals(nickname)){
                 return new DuplicationCheckResponse( "사용가능한 닉네임입니다.",false);
             }else{
                 if(memberService.isDuplicationNickname(nickname)){
@@ -83,7 +80,6 @@ public class MemberController {
     @GetMapping( "/email-check")
     @ResponseBody
     public DuplicationCheckResponse isDuplicationEmail(@RequestParam("email") String email){
-        log.info("email : {}", email);
         if(memberService.isDuplicationEmail(email)){
             return new DuplicationCheckResponse("중복된 이메일입니다.",true);
         }

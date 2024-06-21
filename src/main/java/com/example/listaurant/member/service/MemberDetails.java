@@ -1,7 +1,7 @@
 package com.example.listaurant.member.service;
 
 
-import com.example.listaurant.member.infra.MemberEntity;
+import com.example.listaurant.member.service.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class MemberDetails implements UserDetails {
-    private final MemberEntity member;
+    private final MemberDto member;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_"+member.getRole()));
