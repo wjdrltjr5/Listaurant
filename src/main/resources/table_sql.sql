@@ -22,14 +22,14 @@ CREATE TABLE txt (
   member_id INT,
   text varchar(8000),
   nickname VARCHAR(255),
-  FOREIGN KEY (member_id) REFERENCES member(member_id)
+  FOREIGN KEY (member_id) REFERENCES member(member_id) ON DELETE CASCADE
 );
 
 create table recommend_check(
     txt_id Int,
     member_id INT,
-    FOREIGN KEY (member_id) REFERENCES member(member_id),
-    FOREIGN KEY (txt_id) REFERENCES txt(txt_id)
+    FOREIGN KEY (member_id) REFERENCES member(member_id) ON DELETE CASCADE,
+    FOREIGN KEY (txt_id) REFERENCES txt(txt_id) ON DELETE CASCADE
 );
 
 select * from member;
