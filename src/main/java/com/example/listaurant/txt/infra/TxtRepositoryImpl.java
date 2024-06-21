@@ -52,6 +52,16 @@ public class TxtRepositoryImpl<Map> implements TxtRepository {
     }
 
     @Override
+    public List<TxtEntity> findAllPopularTxt(String title, double lat, double lng) {
+        TxtEntity txtEntity = TxtEntity.builder()
+                .placeName(title)
+                .lat(lat)
+                .lng(lng)
+                .build();
+        return txtMapper.findAllPopularTxt(txtEntity);
+    }
+
+    @Override
     public double getAvgScope(String title, double lat, double lng) {
         TxtEntity txtEntity = TxtEntity.builder()
                 .placeName(title)

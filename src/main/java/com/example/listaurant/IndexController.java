@@ -39,6 +39,7 @@ public class IndexController {
         TxtEntity txtPopularEntity = txtService.findMostPopularTxt(title, changeNum(lat), changeNum(lng));
         TxtEntity txtRecentEntity = txtService.findMostRecentTxt(title, changeNum(lat), changeNum(lng));
         List<TxtEntity> listRecentResponse = txtService.findAllRecentTxt(title, changeNum(lat), changeNum(lng));
+        List<TxtEntity> listPopularResponse = txtService.findAllPopularTxt(title, changeNum(lat), changeNum(lng));
 
         TxtResponse popResponse = TxtResponse.from(txtPopularEntity);
         TxtResponse recentResponse = TxtResponse.from(txtRecentEntity);
@@ -55,6 +56,7 @@ public class IndexController {
         model.addAttribute("pop", popResponse);
         model.addAttribute("recent", recentResponse);
         model.addAttribute("comments", listRecentResponse);
+        model.addAttribute("populars", listPopularResponse);
         model.addAttribute("avgScope", avgScope);
         model.addAttribute("countComments", listRecentResponse.size());
         return "board";
