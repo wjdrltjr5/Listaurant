@@ -9,14 +9,14 @@ import lombok.Setter;
 @Setter
 @Builder
 public class RecommendEntity {
-    Long member_id;
-    Long txt_id;
+    Long memberId;
+    Long txtId;
 
 
     public static RecommendEntity from(RecommendDto recommendDto){
         return RecommendEntity.builder()
-                .txt_id(recommendDto.getTxt_id())
-                .member_id(recommendDto.getMember_id())
+                .txtId(recommendDto.getTxtId())
+                .memberId(recommendDto.getMemberId())
                 .build();
     }
 }

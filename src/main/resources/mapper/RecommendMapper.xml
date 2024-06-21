@@ -6,14 +6,14 @@
 <mapper namespace="com.example.listaurant.recommend.repository.RecommendMapper">
     <insert id="save" parameterType="RecommendEntity">
         insert into recommend_check (txt_id, member_id)
-        values (#{txt_id}, #{member_id} )
+        values (#{txtId}, #{memberId} )
     </insert>
     <select id="findByTxtIdAndMemberId" parameterType="RecommendEntity" resultType="RecommendEntity">
-        select * from member
-        where txt_id = #{txt_id} and member_id = #{memberId}
+        select * from recommend_check
+        where txt_id = #{txtId} and member_id = #{memberId}
     </select>
     <delete id="delete" parameterType="RecommendEntity">
-        delete from member where txt_id = #{txt_id} and member_id = #{memberId}
+        delete from recommend_check where txt_id = #{txtId} and member_id = #{memberId}
     </delete>
 </mapper>
 

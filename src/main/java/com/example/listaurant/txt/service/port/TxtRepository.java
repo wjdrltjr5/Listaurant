@@ -13,6 +13,8 @@ public interface TxtRepository {
     List<TxtEntity> findAllRecentTxt(String title, double lat, double lng);
 
     double getAvgScope(String title, double lat, double lng);
+
+    void plusOneRecommend(Long txtId);
 //    List<TxtEntity> findByRecent();
 //    List<TxtEntity> findByPopular();
 //

@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +49,8 @@ public class IndexController {
 
         // 모델에 필요한 데이터 추가
         if (memberDetails != null){
-            MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
-            model.addAttribute("memberId", memberEntity.getMemberId());
+            MemberDto memberDto = memberService.findById(memberDetails.getId()).get();
+            model.addAttribute("memberId", memberDto.getMemberId());
         }
         model.addAttribute("title", title);
         model.addAttribute("lat", lat);

@@ -17,4 +17,7 @@ public interface TxtService {
 //    List<TxtEntity> findByRecent();
 //    List<TxtEntity> findByPopular();
 //    void deleteTxt(Long id);
+
+    void plusOneRecommend(Long txtId);
+
 }

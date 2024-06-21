@@ -59,6 +59,11 @@ public class TxtRepositoryImpl implements TxtRepository {
             return 0;
         } else return txtMapper.getAvgScope(txtEntity);
     }
+
+    @Override
+    public void plusOneRecommend(Long txtId) {
+        txtMapper.plusOneRecommend(txtId);
+    }
 //
 //    @Override
 //    public List<TxtEntity> findByRecent() { return txtMapper.findByRecent(); }

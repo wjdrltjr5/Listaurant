@@ -28,6 +28,21 @@
             flex: 1; /* 모든 comment 요소의 높이를 균등하게 설정 */
         }
     </style>
+    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function getQueryStringValue(key) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            return urlParams.get(key);
+        }
+
+        $(document).ready(function() {
+            const msg = getQueryStringValue('msg');
+            if(msg !== null){
+                alert(msg)
+            }
+        });
+    </script>
 </head>
 <body>
 <!-- Responsive navbar-->
@@ -133,7 +148,22 @@
                 <c:forEach var="comment" items="${comments}">
                     <div class="comment">
                         <p>${comment.text}</p>
-                        <small>${comment.nickname} - ${comment.writtenDate} - ${comment.scope}</small>
+                        <small class="d-flex justify-content-between align-items-center">
+                             <span>
+                                ${comment.nickname} - ${comment.writtenDate} - ${comment.scope}
+                             </span>
+                            <span class="d-flex align-items-center">
+                                <form action="/recommend" method="post">
+                                    <input type="hidden" name="txtId" value="${comment.txtId}"/>
+                                    <input type="hidden" name="title" value="${title}"/>
+                                    <input type="hidden" name="lat" value="${lat}">
+                                    <input type="hidden" name="lng" value="${lng}">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <input type="image" name="submit" id="recommend" src="images/reicon.png" alt="" width="20" height="20" class="me-1"/>
+                                </form>
+                                ${comment.recommend}
+                            </span>
+                        </small>
                         <script>
                             console.log(${memberId});
                         </script>
@@ -147,15 +177,19 @@
                                 <button type="submit" class="btn btn-secondary btn-sm">수정</button>
                             </form>
                         </c:if>
-                        <small class="d-flex justify-content-between align-items-center">
-                             <span>
-                                ${comment.nickname} - ${comment.writtenDate} - ${comment.scope}
-                             </span>
-                            <span class="d-flex align-items-center">
-                                <a href="/recommend?txtId=${comment.txtId}&memberId=${memberId}}"><img id="recommend" src="images/reicon.png" alt="" width="20" height="20" class="me-1"/></a>
-                                ${comment.recommend}
-                            </span>
-                        </small>
+                        <script>
+                            console.log(${memberId});
+                        </script>
+                        <c:if test="${comment.memberId eq memberId}">
+                            <form action="/board/delete" method="post">
+                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
+                                <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                            </form>
+                            <form action="/board/edit" method="get">
+                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
+                                <button type="submit" class="btn btn-secondary btn-sm">수정</button>
+                            </form>
+                        </c:if>
                         <hr>
                     </div>
                 </c:forEach>
