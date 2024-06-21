@@ -3,6 +3,16 @@ ssginc 미니프로젝트2
 ## 개요
 <맛집 게시판 공유 및 관리><br>
 자신의 위치 주변의 음식점 정보를 가져와서 위치를 확인하고 리뷰를 공유하는 웹페이지
+
+## 개발환경
+- IntelliJ
+- mysql8
+- java17
+- git
+- gradle
+- jsp, bootstrap
+- spring boot, spring web,spring security, lombok, validation, java mail 
+
 ## 기능 요구사항
 - 지도
   - 자신의 위치 정보를 기준으로 화면에 표시한다.
