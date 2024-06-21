@@ -13,6 +13,8 @@ public interface TxtService {
     TxtEntity findMostPopularTxt(String title, double lat, double lng);
     List<TxtEntity> findAllRecentTxt(String title, double lat, double lng);
     List<TxtEntity> findAllPopularTxt(String title, double lat, double lng);
+    List<TxtDto> findByMemberId(Long memberId);
+
     double getAvgScope(String title, double lat, double lng);
 
     void plusOneRecommend(Long txtId);

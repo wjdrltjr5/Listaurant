@@ -1,6 +1,8 @@
 package com.example.listaurant.txt.service.port;
 
 import com.example.listaurant.txt.infra.TxtEntity;
+import com.example.listaurant.txt.service.dto.TxtDto;
+
 import java.util.List;
 
 public interface TxtRepository {
@@ -14,9 +16,8 @@ public interface TxtRepository {
     double getAvgScope(String title, double lat, double lng);
 
     void plusOneRecommend(Long txtId);
-//    List<TxtEntity> findByRecent();
-//    List<TxtEntity> findByPopular();
-//    void updateTxt(TxtEntity txtEntity);
+
+    List<TxtDto> findByMemberId(Long memberId);
 
     void deleteTxt(Long txtId);
 
