@@ -17,6 +17,7 @@ public interface TxtMapper {
 //
 //    void updateTxt(TxtEntity txtEntity);
 //
-//    void deleteTxt(Long id);
+    void deleteTxt(Long txtId);
 
+    void updateTxt(TxtEntity txtEntity);
 }

@@ -39,4 +39,12 @@ public class TxtDto {
                 .nickname(request.getNickname())
                 .build();
     }
+
+    public static TxtDto from(UpdateTxtRequest request){
+        return TxtDto.builder()
+                .txtId(request.getTxtId())
+                .text(request.getText())
+                .scope(request.getScope())
+                .build();
+    }
 }

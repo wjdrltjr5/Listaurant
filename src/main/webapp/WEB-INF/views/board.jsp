@@ -126,19 +126,48 @@
                     <div class="comment">
                         <p>${comment.text}</p>
                         <small>${comment.nickname} - ${comment.writtenDate} - ${comment.scope}</small>
-                        <script>
-                            console.log(${memberId});
-                        </script>
+
                         <c:if test="${comment.memberId eq memberId}">
-                            <form action="/board/delete" method="post">
-                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
-                                <button type="submit" class="btn btn-danger btn-sm">삭제</button>
-                            </form>
-                            <form action="/board/edit" method="get">
-                                <input type="hidden" name="commentId" value="${comment.txtId}" /> <!-- txtId로 수정 -->
-                                <button type="submit" class="btn btn-secondary btn-sm">수정</button>
-                            </form>
+                            <div id="comment-${comment.txtId}" class="comment">
+                                <form action="/board/delete" method="post" onsubmit="return confirmTxtDeletion();">
+                                    <input type="hidden" name="commentId" value="${comment.txtId}" />
+                                    <input type="hidden" name="title" value="${title}"/>
+                                    <input type="hidden" name="lat" value="${lat}"/>
+                                    <input type="hidden" name="lng" value="${lng}"/>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                                </form>
+
+                                <button class="btn btn-secondary btn-sm" onclick="editComment(${comment.txtId}, '${comment.text}', ${comment.scope})">수정</button>
+                                <hr>
+                            </div>
+                            <div id="edit-comment-${comment.txtId}" style="display: none;">
+                                <form action="/board/update" method="post">
+                                    <input type="hidden" name="commentId" value="${comment.txtId}" />
+                                    <input type="hidden" name="title" value="${title}"/>
+                                    <input type="hidden" name="lat" value="${lat}"/>
+                                    <input type="hidden" name="lng" value="${lng}"/>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="text">${comment.text}</textarea>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="rating">별점을 매겨주세요:</label>
+                                        <div id="re_rating" class="d-flex justify-content-center">
+                                            <c:forEach var="i" begin="1" end="5">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="scope" id="rating${i}" value="${i}" ${comment.scope eq i ? 'checked' : ''}>
+                                                    <label class="form-check-label" for="rating${i}">${i}</label>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm">저장</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="cancelEdit(${comment.txtId})">취소</button>
+                                </form>
+                            </div>
                         </c:if>
+
                         <hr>
                     </div>
                 </c:forEach>

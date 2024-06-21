@@ -16,5 +16,6 @@ public interface TxtService {
     double getAvgScope(String title, double lat, double lng);
 //    List<TxtEntity> findByRecent();
 //    List<TxtEntity> findByPopular();
-//    void deleteTxt(Long id);
+    void deleteTxt(Long txtId);
+    void updateTxt(TxtDto txtDto);
 }

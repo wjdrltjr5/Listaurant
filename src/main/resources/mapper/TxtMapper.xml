@@ -27,6 +27,17 @@
     <select id="getAvgScope" parameterType="TxtEntity" resultType="java.lang.Double">
         select avg(scope) from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
     </select>
+
+    <delete id="deleteTxt" parameterType="long">
+        delete from txt where txt_id = #{txtId}
+    </delete>
+
+    <update id="updateTxt" parameterType="TxtEntity">
+        update txt
+        SET text = #{text},
+        scope = #{scope}
+        WHERE txt_id = #{txtId}
+    </update>
 </mapper>
 
 

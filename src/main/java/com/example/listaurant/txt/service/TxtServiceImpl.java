@@ -70,8 +70,23 @@ public class TxtServiceImpl implements TxtService {
 //        return List.of();
 //    }
 //
-//    @Override
-//    public void deleteTxt(Long id) {
+    @Override
+    public void deleteTxt(Long txtId) { txtRepository.deleteTxt(txtId); }
 
-//    }
+    @Override
+    public void updateTxt(TxtDto txtDto) {
+        TxtEntity txt = TxtEntity.builder()
+                .txtId(txtDto.getTxtId())
+                .placeName(txtDto.getPlaceName())
+                .writtenDate(txtDto.getWrittenDate())
+                .recommend(txtDto.getRecommend())
+                .scope(txtDto.getScope())
+                .text(txtDto.getText())
+                .memberId(txtDto.getMemberId())
+                .lat(txtDto.getLat())
+                .lng(txtDto.getLng())
+                .nickname(txtDto.getNickname())
+                .build();
+
+        txtRepository.updateTxt(txt); }
 }

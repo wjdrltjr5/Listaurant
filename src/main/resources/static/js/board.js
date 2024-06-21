@@ -142,3 +142,21 @@ window.onload = function() {
     }
 
 };
+
+function confirmTxtDeletion() {
+    return confirm("정말로 삭제하시겠습니까?");
+}
+
+function editComment(commentId, text, scope) {
+    // Hide the comment display div
+    document.getElementById('comment-' + commentId).style.display = 'none';
+    // Show the comment edit div
+    document.getElementById('edit-comment-' + commentId).style.display = 'block';
+}
+
+function cancelEdit(commentId) {
+    // Show the comment display div
+    document.getElementById('comment-' + commentId).style.display = 'block';
+    // Hide the comment edit div
+    document.getElementById('edit-comment-' + commentId).style.display = 'none';
+}

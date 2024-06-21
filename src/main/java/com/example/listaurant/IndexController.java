@@ -1,11 +1,11 @@
 package com.example.listaurant;
 
-
 import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.MemberDetails;
 import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.txt.controller.port.TxtService;
 import com.example.listaurant.txt.controller.request.CommentRequest;
+import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
 import com.example.listaurant.txt.controller.response.TxtResponse;
 import com.example.listaurant.txt.infra.TxtEntity;
 import com.example.listaurant.txt.service.dto.TxtDto;
@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,12 +41,9 @@ public class IndexController {
         TxtEntity txtRecentEntity = txtService.findMostRecentTxt(title, changeNum(lat), changeNum(lng));
         List<TxtEntity> listRecentResponse = txtService.findAllRecentTxt(title, changeNum(lat), changeNum(lng));
 
-
-
         TxtResponse popResponse = TxtResponse.from(txtPopularEntity);
         TxtResponse recentResponse = TxtResponse.from(txtRecentEntity);
         double avgScope = txtService.getAvgScope(title, changeNum(lat), changeNum(lng));
-        log.info("avgScope: {}", avgScope);
 
         // 모델에 필요한 데이터 추가
         if (memberDetails != null){
@@ -77,6 +74,7 @@ public class IndexController {
     public String textSave(@Valid @ModelAttribute CommentRequest commentRequest,
                            @AuthenticationPrincipal MemberDetails memberDetails,
                            RedirectAttributes redirectAttributes) {
+
         double tmpLat = commentRequest.getLat();
         double tmpLng = commentRequest.getLng();
 
@@ -97,9 +95,40 @@ public class IndexController {
         return "redirect:/board?title={title}&lat={lat}&lng={lng}";
     }
 
+    @PostMapping("/delete")
+    public String textDelete(@RequestParam("title") String title, @RequestParam("lat") float lat,
+                             @RequestParam("lng") float lng, @RequestParam("commentId") long txtId,
+                             RedirectAttributes redirectAttributes) {
+
+        txtService.deleteTxt(txtId);
+
+        redirectAttributes.addAttribute("title", title);
+        redirectAttributes.addAttribute("lat", lat);
+        redirectAttributes.addAttribute("lng", lng);
+
+        return "redirect:/board?title={title}&lat={lat}&lng={lng}";
+    }
+
+    @PostMapping("/update")
+    public String textUpdate(@ModelAttribute UpdateTxtRequest updateTxtRequest,
+                             @RequestParam("title") String title, @RequestParam("lat") float lat,
+                             @RequestParam("lng") float lng, @RequestParam("commentId") long txtId,
+                             @RequestParam("text") String text, RedirectAttributes redirectAttributes) {
+        log.info("adfsafas");
+
+        updateTxtRequest.setTxtId(txtId);
+        updateTxtRequest.setText(text);
+        redirectAttributes.addAttribute("title", title);
+        redirectAttributes.addAttribute("lat", lat);
+        redirectAttributes.addAttribute("lng", lng);
+
+        txtService.updateTxt(TxtDto.from(updateTxtRequest));
+        // 리다이렉트 URL 생성 및 반환
+        return "redirect:/board?title={title}&lat={lat}&lng={lng}";
+    }
 
     public double changeNum(double num){
-        BigDecimal bd = new BigDecimal(num).setScale(5, RoundingMode.HALF_UP);
+        BigDecimal bd = new BigDecimal(num).setScale(4, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 }
