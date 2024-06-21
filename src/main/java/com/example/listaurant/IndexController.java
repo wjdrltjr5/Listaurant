@@ -1,8 +1,8 @@
 package com.example.listaurant;
 
-import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.MemberDetails;
 import com.example.listaurant.member.controller.port.MemberService;
+import com.example.listaurant.member.service.dto.MemberDto;
 import com.example.listaurant.txt.controller.port.TxtService;
 import com.example.listaurant.txt.controller.request.CommentRequest;
 import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -47,8 +46,8 @@ public class IndexController {
 
         // 모델에 필요한 데이터 추가
         if (memberDetails != null){
-            MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
-            model.addAttribute("memberId", memberEntity.getMemberId());
+            MemberDto memberDto = memberService.findById(memberDetails.getId()).get();
+            model.addAttribute("memberId", memberDto.getMemberId());
         }
         model.addAttribute("title", title);
         model.addAttribute("lat", lat);
@@ -74,13 +73,12 @@ public class IndexController {
     public String textSave(@Valid @ModelAttribute CommentRequest commentRequest,
                            @AuthenticationPrincipal MemberDetails memberDetails,
                            RedirectAttributes redirectAttributes) {
-
         double tmpLat = commentRequest.getLat();
         double tmpLng = commentRequest.getLng();
 
-        MemberEntity memberEntity = memberService.findById(memberDetails.getId()).get();
-        commentRequest.setMemberId(memberEntity.getMemberId());
-        commentRequest.setNickname(memberEntity.getNickname());
+        MemberDto memberDto = memberService.findById(memberDetails.getId()).get();
+        commentRequest.setMemberId(memberDto.getMemberId());
+        commentRequest.setNickname(memberDto.getNickname());
         commentRequest.setWrittenDate(LocalDateTime.now());
         commentRequest.setLat(changeNum(commentRequest.getLat()));
         commentRequest.setLng(changeNum(commentRequest.getLng()));

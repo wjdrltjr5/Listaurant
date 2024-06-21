@@ -28,6 +28,10 @@
         select avg(scope) from txt where place_name = #{placeName} and lat = #{lat} and lng = #{lng}
     </select>
 
+    <update id="plusOneRecommend" parameterType="long">
+        update txt set recommend = recommend + 1 where txt_id = #{txtId}
+    </update>
+
     <delete id="deleteTxt" parameterType="long">
         delete from txt where txt_id = #{txtId}
     </delete>

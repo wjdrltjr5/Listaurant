@@ -20,7 +20,29 @@
         #container.view_map #btnMap {display: none;}
         #container.view_roadview #mapWrapper {z-index: 0;}
         #container.view_roadview #btnRoadview {display: none;}
+        .comments-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .comment {
+            flex: 1; /* 모든 comment 요소의 높이를 균등하게 설정 */
+        }
     </style>
+    <script src="webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function getQueryStringValue(key) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            return urlParams.get(key);
+        }
+
+        $(document).ready(function() {
+            const msg = getQueryStringValue('msg');
+            if(msg !== null){
+                alert(msg)
+            }
+        });
+    </script>
 </head>
 <body>
 <!-- Responsive navbar-->
@@ -122,11 +144,26 @@
                 <h2>댓글 리스트 (${countComments})</h2>
             </div>
             <div class="card-body">
+                <div class="comments-container">
                 <c:forEach var="comment" items="${comments}">
                     <div class="comment">
                         <p>${comment.text}</p>
-                        <small>${comment.nickname} - ${comment.writtenDate} - ${comment.scope}</small>
-
+                        <small class="d-flex justify-content-between align-items-center">
+                             <span>
+                                ${comment.nickname} - ${comment.writtenDate} - ${comment.scope}
+                             </span>
+                            <span class="d-flex align-items-center">
+                                <form action="/recommend" method="post">
+                                    <input type="hidden" name="txtId" value="${comment.txtId}"/>
+                                    <input type="hidden" name="title" value="${title}"/>
+                                    <input type="hidden" name="lat" value="${lat}">
+                                    <input type="hidden" name="lng" value="${lng}">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <input type="image" name="submit" id="recommend" src="images/reicon.png" alt="" width="20" height="20" class="me-1"/>
+                                </form>
+                                ${comment.recommend}
+                            </span>
+                        </small>
                         <c:if test="${comment.memberId eq memberId}">
                             <div id="comment-${comment.txtId}" class="comment">
                                 <form action="/board/delete" method="post" onsubmit="return confirmTxtDeletion();">
@@ -171,6 +208,7 @@
                         <hr>
                     </div>
                 </c:forEach>
+                </div>
             </div>
 
 

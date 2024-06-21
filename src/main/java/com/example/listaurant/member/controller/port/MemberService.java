@@ -13,9 +13,9 @@ public interface MemberService {
 
     boolean isDuplicationNickname(String nickname);
 
-    Optional<MemberEntity> findByEmail(String email);
+    Optional<MemberDto> findByEmail(String email);
 
-    Optional<MemberEntity> findById(Long id);
+    Optional<MemberDto> findById(Long id);
 
     void update(MemberDto memberDto);
 

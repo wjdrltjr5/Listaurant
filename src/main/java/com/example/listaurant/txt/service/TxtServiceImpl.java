@@ -59,6 +59,11 @@ public class TxtServiceImpl implements TxtService {
     public double getAvgScope(String title, double lat, double lng) {
         return txtRepository.getAvgScope(title, lat, lng);
     }
+
+    @Override
+    public void plusOneRecommend(Long txtId) {
+        txtRepository.plusOneRecommend(txtId);
+    }
 //
 //    @Override
 //    public List<TxtEntity> findByRecent() {

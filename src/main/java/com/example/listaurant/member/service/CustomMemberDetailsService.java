@@ -1,6 +1,7 @@
 package com.example.listaurant.member.service;
 
 import com.example.listaurant.member.infra.MemberEntity;
+import com.example.listaurant.member.service.dto.MemberDto;
 import com.example.listaurant.member.service.port.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class CustomMemberDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        MemberEntity member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 사용자 입니다."));
+        MemberDto member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 사용자 입니다."));
         return new MemberDetails(member);
     }
 }

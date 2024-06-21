@@ -12,6 +12,8 @@ public interface TxtMapper {
     TxtEntity findMostPopularTxt(TxtEntity txtEntity);
     List<TxtEntity> findAllRecentTxt(TxtEntity txtEntity);
     Double getAvgScope(TxtEntity txtEntity);
+
+    void plusOneRecommend(Long txtId);
 //    List<TxtEntity> findByRecent();
 //    List<TxtEntity> findByPopular();
 //
