@@ -4,14 +4,15 @@ import com.example.listaurant.member.controller.port.MemberService;
 import com.example.listaurant.member.controller.request.PwdUpdateRequest;
 import com.example.listaurant.member.controller.request.UpdateRequest;
 import com.example.listaurant.member.controller.response.MemberResponse;
-import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.MemberDetails;
 import com.example.listaurant.member.service.dto.MemberDto;
 import com.example.listaurant.txt.controller.port.TxtService;
+import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
 import com.example.listaurant.txt.service.dto.TxtDto;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
+@Slf4j
 public class MypageController {
 
     private final MemberService memberService;
@@ -86,4 +88,15 @@ public class MypageController {
         return "redirect:/mypage";
     }
 
+    @PostMapping("/comment-delete")
+    public String textDelete(@RequestParam("commentId") long txtId) {
+        txtService.deleteTxt(txtId);
+        return "redirect:/mypage";
+    }
+    @PostMapping("/comment-update")
+    public String textUpdate(@ModelAttribute UpdateTxtRequest updateTxtRequest) {
+        log.info("updateTxtRequest = {}",updateTxtRequest);
+        txtService.updateTxt(TxtDto.from(updateTxtRequest));
+        return "redirect:/mypage";
+    }
 }
