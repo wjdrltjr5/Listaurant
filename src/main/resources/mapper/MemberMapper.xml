@@ -5,8 +5,8 @@
 
 <mapper namespace="com.example.listaurant.member.infra.MemberMapper">
     <insert id="save" parameterType="MemberEntity" useGeneratedKeys="true">
-        insert into member (email, nickname, passwd, pno, role)
-        values (#{email}, #{nickname},#{passwd}, #{pno}, #{role} )
+        insert into member (email, nickname, passwd, pno, role, status, certification_code)
+        values (#{email}, #{nickname},#{passwd}, #{pno}, #{role}, #{status}, #{certificationCode} )
     </insert>
     <select id="findByEmail" parameterType="string" resultType="MemberEntity">
         select * from member
@@ -28,6 +28,7 @@
             <if test="passwd != null">passwd = #{passwd},</if>
             <if test="pno != null">pno = #{pno},</if>
             <if test="role != null">role = #{role},</if>
+            <if test="status != null">status = #{status},</if>
         </set>
         where member_id = #{memberId}
     </update>

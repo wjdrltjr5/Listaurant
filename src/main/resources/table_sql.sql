@@ -3,11 +3,13 @@ drop table txt;
 drop table member;
 
 CREATE TABLE member (
-  member_id INT PRIMARY KEY AUTO_INCREMENT,
-  passwd VARCHAR(255),
-  email VARCHAR(255) unique ,
-  nickname VARCHAR(255) unique,
-  pno VARCHAR(255),
+    member_id INT PRIMARY KEY AUTO_INCREMENT,
+    passwd VARCHAR(255),
+    email VARCHAR(255) unique ,
+    nickname VARCHAR(255) unique,
+    pno VARCHAR(255),
+    status VARCHAR(255),
+    certification_code VARCHAR(255),
     role VARCHAR(255)
 );
 

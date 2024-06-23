@@ -1,6 +1,7 @@
 package com.example.listaurant.member.service;
 
 
+import com.example.listaurant.member.domain.MemberStatus;
 import com.example.listaurant.member.service.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,4 +52,6 @@ public class MemberDetails implements UserDetails {
     public Long getId(){
         return member.getMemberId();
     }
+
+    public String getStatus(){ return member.getStatus(); }
 }

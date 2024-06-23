@@ -22,4 +22,6 @@ public interface MemberService {
     void delete(Long id);
 
     void sendTempPassword(MemberDto dto);
+
+    void activeStatus(String email);
 }

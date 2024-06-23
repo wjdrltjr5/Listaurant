@@ -1,6 +1,7 @@
 package com.example.listaurant.common.config;
 
 
+import com.example.listaurant.common.exception.NotCertificationException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +21,12 @@ public class CustomAuthFailHandler extends SimpleUrlAuthenticationFailureHandler
         String message = "";
         if(exception instanceof BadCredentialsException){
             message = "아이디 또는 비밀번호가 맞지 않습니다.";
+        }else if(exception instanceof NotCertificationException){
+            message = "이메일 인증을 해주세요";
+        } else if (exception instanceof UsernameNotFoundException) {
+            message = "아이디 또는 비밀번호가 맞지 않습니다.";
         }
+
         message = URLEncoder.encode(message, "UTF-8");
         setDefaultFailureUrl("/login?error-message="+message);
         super.onAuthenticationFailure(request, response, exception);

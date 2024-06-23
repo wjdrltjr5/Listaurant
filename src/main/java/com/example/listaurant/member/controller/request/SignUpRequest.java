@@ -26,5 +26,5 @@ public class SignUpRequest {
     private String passwd;
     @NotBlank(message = "필수입력 값 입니다.")
     private String pno;
-
+    private String certificationCode;
 }

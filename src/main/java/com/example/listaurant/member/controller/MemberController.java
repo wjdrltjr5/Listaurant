@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -40,6 +42,7 @@ public class MemberController {
         if (br.hasErrors()) {
             return "sign-up";
         }
+        signUpRequest.setCertificationCode(createCertificationCode());
         memberService.save(MemberDto.from(signUpRequest));
         return "login";
     }
@@ -84,5 +87,9 @@ public class MemberController {
             return new DuplicationCheckResponse("중복된 이메일입니다.",true);
         }
         return new DuplicationCheckResponse( "사용가능한 이메일입니다.",false);
+    }
+
+    private String createCertificationCode(){
+        return UUID.randomUUID().toString();
     }
 }

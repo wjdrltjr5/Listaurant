@@ -4,6 +4,7 @@ import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     private final SimpleUrlAuthenticationFailureHandler failureHandler;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -23,7 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/css/**","/assets/**","/images/**","/webjars/**","/js/**"
-                                ,"/nickname-check", "/email-check").permitAll()
+                                ,"/nickname-check", "/email-check","/certification").permitAll()
                         .requestMatchers("/","/sign-up","/login","/board","/temp-password").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.INCLUDE).permitAll()
@@ -37,6 +39,7 @@ public class SecurityConfig {
                         .passwordParameter("passwd")
                         .failureHandler(failureHandler)
                 )
+                .authenticationProvider(authenticationProvider)
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .deleteCookies("JSESSIONID")
@@ -48,8 +51,4 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

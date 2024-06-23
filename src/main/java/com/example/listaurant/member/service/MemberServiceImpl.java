@@ -5,6 +5,7 @@ import com.example.listaurant.member.service.dto.MemberDto;
 import com.example.listaurant.member.service.port.MailSender;
 import com.example.listaurant.member.service.port.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ public class MemberServiceImpl implements MemberService {
     public void save(MemberDto memberDto) {
         memberDto.setPasswd(passwordEncoder.encode(memberDto.getPasswd()));
         memberRepository.save(memberDto);
+        mailSender.sendCertificationCode(memberDto.getEmail(), memberDto.getCertificationCode());
     }
 
     @Transactional(readOnly = true)
@@ -66,11 +68,19 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void sendTempPassword(MemberDto memberDto) {
         String uuid = UUID.randomUUID().toString();
-        mailSender.send(memberDto.getEmail(), uuid);
+        mailSender.sendTempPassword(memberDto.getEmail(), uuid);
         if(isDuplicationEmail(memberDto.getEmail())){
             memberDto = memberRepository.findByEmail(memberDto.getEmail()).get();
             memberDto.setPasswd(passwordEncoder.encode(uuid));
             memberRepository.update(memberDto);
         }
+    }
+
+    @Transactional
+    @Override
+    public void activeStatus(String email) {
+        MemberDto dto = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("등록되지 않은 이메일입니다."));
+        dto.activeStatus();
+        memberRepository.update(dto);
     }
 }
