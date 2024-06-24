@@ -1,6 +1,6 @@
 package com.example.listaurant.member.controller;
 
-import com.example.listaurant.member.controller.port.MemberService;
+import com.example.listaurant.member.service.port.MemberService;
 import com.example.listaurant.member.controller.request.SignUpRequest;
 import com.example.listaurant.member.controller.response.DuplicationCheckResponse;
 import com.example.listaurant.member.service.dto.MemberDto;

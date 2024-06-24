@@ -1,12 +1,12 @@
 package com.example.listaurant.member.controller;
 
-import com.example.listaurant.member.controller.port.MemberService;
+import com.example.listaurant.member.service.port.MemberService;
 import com.example.listaurant.member.controller.request.PwdUpdateRequest;
 import com.example.listaurant.member.controller.request.UpdateRequest;
 import com.example.listaurant.member.controller.response.MemberResponse;
 import com.example.listaurant.member.service.MemberDetails;
 import com.example.listaurant.member.service.dto.MemberDto;
-import com.example.listaurant.txt.controller.port.TxtService;
+import com.example.listaurant.txt.service.port.TxtService;
 import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
 import com.example.listaurant.txt.service.dto.TxtDto;
 import jakarta.servlet.http.HttpSession;

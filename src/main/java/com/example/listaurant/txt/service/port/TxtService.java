@@ -1,4 +1,4 @@
-package com.example.listaurant.txt.controller.port;
+package com.example.listaurant.txt.service.port;
 
 import com.example.listaurant.txt.infra.TxtEntity;
 import com.example.listaurant.txt.service.dto.TxtDto;

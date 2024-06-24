@@ -1,6 +1,6 @@
 package com.example.listaurant.recommend.service;
 
-import com.example.listaurant.recommend.controller.port.RecommendService;
+import com.example.listaurant.recommend.service.port.RecommendService;
 import com.example.listaurant.recommend.service.dto.RecommendDto;
 import com.example.listaurant.recommend.service.port.RecommendRepository;
 import lombok.RequiredArgsConstructor;

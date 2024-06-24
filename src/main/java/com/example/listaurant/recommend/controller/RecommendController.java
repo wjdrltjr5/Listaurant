@@ -1,10 +1,10 @@
 package com.example.listaurant.recommend.controller;
 
 import com.example.listaurant.member.service.MemberDetails;
-import com.example.listaurant.recommend.controller.port.RecommendService;
+import com.example.listaurant.recommend.service.port.RecommendService;
 import com.example.listaurant.recommend.controller.request.RecommendRequest;
 import com.example.listaurant.recommend.service.dto.RecommendDto;
-import com.example.listaurant.txt.controller.port.TxtService;
+import com.example.listaurant.txt.service.port.TxtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

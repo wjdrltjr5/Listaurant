@@ -1,6 +1,6 @@
 package com.example.listaurant.txt.service;
 
-import com.example.listaurant.txt.controller.port.TxtService;
+import com.example.listaurant.txt.service.port.TxtService;
 import com.example.listaurant.txt.infra.TxtEntity;
 import com.example.listaurant.txt.service.dto.TxtDto;
 import com.example.listaurant.txt.service.port.TxtRepository;

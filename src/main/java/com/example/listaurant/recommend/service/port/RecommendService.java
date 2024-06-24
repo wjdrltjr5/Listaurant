@@ -1,4 +1,4 @@
-package com.example.listaurant.recommend.controller.port;
+package com.example.listaurant.recommend.service.port;
 
 import com.example.listaurant.recommend.service.dto.RecommendDto;
 

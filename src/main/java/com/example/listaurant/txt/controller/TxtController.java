@@ -1,9 +1,9 @@
 package com.example.listaurant.txt.controller;
 
 import com.example.listaurant.member.service.MemberDetails;
-import com.example.listaurant.member.controller.port.MemberService;
+import com.example.listaurant.member.service.port.MemberService;
 import com.example.listaurant.member.service.dto.MemberDto;
-import com.example.listaurant.txt.controller.port.TxtService;
+import com.example.listaurant.txt.service.port.TxtService;
 import com.example.listaurant.txt.controller.request.CommentRequest;
 import com.example.listaurant.txt.controller.request.UpdateTxtRequest;
 import com.example.listaurant.txt.controller.response.TxtResponse;

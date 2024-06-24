@@ -1,6 +1,5 @@
-package com.example.listaurant.member.controller.port;
+package com.example.listaurant.member.service.port;
 
-import com.example.listaurant.member.infra.MemberEntity;
 import com.example.listaurant.member.service.dto.MemberDto;
 
 import java.util.Optional;
